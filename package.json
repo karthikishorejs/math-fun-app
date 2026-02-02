@@ -1,0 +1,35 @@
+{
+  "name": "math-fun-app",
+  "version": "1.0.0",
+  "description": "A fun math learning app for first graders to practice number bonds, addition, and subtraction",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "start": "python3 -m http.server 8000"
+  },
+  "keywords": [
+    "math",
+    "education",
+    "kids",
+    "learning",
+    "first-grade",
+    "addition",
+    "subtraction",
+    "number-bonds"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "verbose": true
+  }
+}
