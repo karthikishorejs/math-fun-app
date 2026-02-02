@@ -132,11 +132,17 @@ class MathFunApp {
         // Stats (persisted)
         this.stats = this.loadStats();
 
+        // Session tracking
+        this.sessions = this.loadSessions();
+        this.currentSessionStats = null;
+        this.sessionStartTime = null;
+
         // DOM Elements
         this.screens = {
             menu: document.getElementById('menu-screen'),
             game: document.getElementById('game-screen'),
-            results: document.getElementById('results-screen')
+            results: document.getElementById('results-screen'),
+            dashboard: document.getElementById('dashboard-screen')
         };
 
         this.elements = {
@@ -188,7 +194,22 @@ class MathFunApp {
     loadStats() {
         const saved = localStorage.getItem('mathFunStats');
         if (saved) {
-            return JSON.parse(saved);
+            const stats = JSON.parse(saved);
+            // Ensure all fields exist (for backwards compatibility)
+            return {
+                stars: stats.stars || 0,
+                streak: stats.streak || 0,
+                bestStreak: stats.bestStreak || 0,
+                totalCorrect: stats.totalCorrect || 0,
+                totalAttempted: stats.totalAttempted || 0,
+                trophies: stats.trophies || [],
+                bestTimerScore: stats.bestTimerScore || 0,
+                byType: stats.byType || {
+                    bonds: { correct: 0, attempted: 0 },
+                    addition: { correct: 0, attempted: 0 },
+                    subtraction: { correct: 0, attempted: 0 }
+                }
+            };
         }
         return {
             stars: 0,
@@ -197,8 +218,29 @@ class MathFunApp {
             totalCorrect: 0,
             totalAttempted: 0,
             trophies: [],
-            bestTimerScore: 0
+            bestTimerScore: 0,
+            byType: {
+                bonds: { correct: 0, attempted: 0 },
+                addition: { correct: 0, attempted: 0 },
+                subtraction: { correct: 0, attempted: 0 }
+            }
         };
+    }
+
+    // Load sessions from localStorage
+    loadSessions() {
+        const saved = localStorage.getItem('mathFunSessions');
+        if (saved) {
+            return JSON.parse(saved);
+        }
+        return [];
+    }
+
+    // Save sessions to localStorage
+    saveSessions() {
+        // Keep only last 50 sessions
+        const recentSessions = this.sessions.slice(-50);
+        localStorage.setItem('mathFunSessions', JSON.stringify(recentSessions));
     }
 
     // Save stats to localStorage
@@ -290,6 +332,25 @@ class MathFunApp {
                 this.sound.playClick();
             }
         });
+
+        // Dashboard button
+        document.getElementById('open-dashboard').addEventListener('click', () => {
+            this.sound.playClick();
+            this.showDashboard();
+        });
+
+        // Back from dashboard
+        document.getElementById('back-from-dashboard').addEventListener('click', () => {
+            this.sound.playClick();
+            this.showScreen('menu');
+        });
+
+        // Reset stats button
+        document.getElementById('reset-stats').addEventListener('click', () => {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                this.resetAllStats();
+            }
+        });
     }
 
     // Show a specific screen
@@ -309,6 +370,14 @@ class MathFunApp {
         this.currentProblem = 0;
         this.correctAnswers = 0;
         this.isTimerMode = mode === 'timer';
+
+        // Initialize session tracking
+        this.sessionStartTime = Date.now();
+        this.currentSessionStats = {
+            bonds: { correct: 0, attempted: 0 },
+            addition: { correct: 0, attempted: 0 },
+            subtraction: { correct: 0, attempted: 0 }
+        };
 
         const settings = this.getDifficultySettings();
         this.totalProblems = this.isTimerMode ? 999 : settings.problemsPerRound;
@@ -610,6 +679,7 @@ class MathFunApp {
         buttons.forEach(btn => btn.disabled = true);
 
         const isCorrect = selected === correct;
+        const problemType = this.problems[this.currentProblem].type;
 
         if (isCorrect) {
             button.classList.add('correct');
@@ -634,8 +704,22 @@ class MathFunApp {
             this.sound.playIncorrect();
         }
 
+        // Track by problem type
         this.stats.totalAttempted++;
         if (isCorrect) this.stats.totalCorrect++;
+
+        // Update type-specific stats
+        if (this.stats.byType && this.stats.byType[problemType]) {
+            this.stats.byType[problemType].attempted++;
+            if (isCorrect) this.stats.byType[problemType].correct++;
+        }
+
+        // Update session stats
+        if (this.currentSessionStats && this.currentSessionStats[problemType]) {
+            this.currentSessionStats[problemType].attempted++;
+            if (isCorrect) this.currentSessionStats[problemType].correct++;
+        }
+
         this.updateStatsDisplay();
         this.saveStats();
 
@@ -674,6 +758,9 @@ class MathFunApp {
     // End game and show results
     endGame() {
         this.stopTimer();
+
+        // Save session
+        this.saveSession();
 
         // Calculate stars earned
         const percentage = this.isTimerMode
@@ -872,6 +959,266 @@ class MathFunApp {
 
             this.elements.trophies.appendChild(span);
         });
+    }
+
+    // Save current session
+    saveSession() {
+        if (!this.sessionStartTime) return;
+
+        const sessionDuration = Math.round((Date.now() - this.sessionStartTime) / 1000);
+        const totalAttempted = Object.values(this.currentSessionStats).reduce((sum, t) => sum + t.attempted, 0);
+        const totalCorrect = Object.values(this.currentSessionStats).reduce((sum, t) => sum + t.correct, 0);
+
+        if (totalAttempted === 0) return;
+
+        const session = {
+            timestamp: Date.now(),
+            mode: this.currentMode,
+            difficulty: this.difficulty,
+            duration: sessionDuration,
+            correct: totalCorrect,
+            attempted: totalAttempted,
+            byType: { ...this.currentSessionStats }
+        };
+
+        this.sessions.push(session);
+        this.saveSessions();
+    }
+
+    // Show parent dashboard
+    showDashboard() {
+        this.showScreen('dashboard');
+        this.renderDashboard();
+    }
+
+    // Render dashboard with all analytics
+    renderDashboard() {
+        this.renderOverviewCards();
+        this.renderAccuracyBars();
+        this.renderWeeklyChart();
+        this.renderRecentSessions();
+        this.renderProblemAreas();
+    }
+
+    // Render overview cards
+    renderOverviewCards() {
+        const today = new Date().toDateString();
+        const todaySessions = this.sessions.filter(s => new Date(s.timestamp).toDateString() === today);
+
+        // Sessions today
+        document.getElementById('dash-sessions-today').textContent = todaySessions.length;
+
+        // Overall accuracy
+        const accuracy = this.stats.totalAttempted > 0
+            ? Math.round((this.stats.totalCorrect / this.stats.totalAttempted) * 100)
+            : 0;
+        document.getElementById('dash-accuracy').textContent = accuracy + '%';
+
+        // Time practiced today
+        const timeToday = todaySessions.reduce((sum, s) => sum + (s.duration || 0), 0);
+        const minutes = Math.round(timeToday / 60);
+        document.getElementById('dash-time-today').textContent = minutes + 'm';
+    }
+
+    // Render accuracy bars by type
+    renderAccuracyBars() {
+        const types = ['bonds', 'addition', 'subtraction'];
+
+        types.forEach(type => {
+            const stats = this.stats.byType?.[type] || { correct: 0, attempted: 0 };
+            const accuracy = stats.attempted > 0 ? Math.round((stats.correct / stats.attempted) * 100) : 0;
+
+            const bar = document.getElementById(`accuracy-${type}`);
+            const text = document.getElementById(`accuracy-${type}-text`);
+
+            if (bar) bar.style.width = accuracy + '%';
+            if (text) text.textContent = accuracy + '%';
+        });
+    }
+
+    // Render weekly chart
+    renderWeeklyChart() {
+        const container = document.getElementById('weekly-chart');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const today = new Date();
+        const weekData = [];
+
+        // Get data for last 7 days
+        for (let i = 6; i >= 0; i--) {
+            const date = new Date(today);
+            date.setDate(date.getDate() - i);
+            const dateStr = date.toDateString();
+
+            const daySessions = this.sessions.filter(s =>
+                new Date(s.timestamp).toDateString() === dateStr
+            );
+
+            const correct = daySessions.reduce((sum, s) => sum + (s.correct || 0), 0);
+
+            weekData.push({
+                day: days[date.getDay()],
+                correct: correct,
+                isToday: i === 0
+            });
+        }
+
+        const maxCorrect = Math.max(...weekData.map(d => d.correct), 1);
+
+        weekData.forEach(data => {
+            const dayBar = document.createElement('div');
+            dayBar.className = 'day-bar';
+
+            const barFill = document.createElement('div');
+            barFill.className = 'day-bar-fill';
+            const height = Math.max(4, (data.correct / maxCorrect) * 80);
+            barFill.style.height = height + 'px';
+
+            const label = document.createElement('span');
+            label.className = 'day-bar-label';
+            label.textContent = data.day;
+
+            const value = document.createElement('span');
+            value.className = 'day-bar-value';
+            value.textContent = data.correct;
+
+            dayBar.appendChild(value);
+            dayBar.appendChild(barFill);
+            dayBar.appendChild(label);
+            container.appendChild(dayBar);
+        });
+    }
+
+    // Render recent sessions
+    renderRecentSessions() {
+        const container = document.getElementById('sessions-list');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        const recentSessions = this.sessions.slice(-10).reverse();
+
+        if (recentSessions.length === 0) {
+            container.innerHTML = '<div class="no-data-message">No sessions yet. Start practicing!</div>';
+            return;
+        }
+
+        recentSessions.forEach(session => {
+            const item = document.createElement('div');
+            item.className = 'session-item';
+
+            const accuracy = session.attempted > 0
+                ? Math.round((session.correct / session.attempted) * 100)
+                : 0;
+
+            let scoreClass = 'needs-work';
+            if (accuracy >= 80) scoreClass = 'good';
+            else if (accuracy >= 60) scoreClass = 'medium';
+
+            const timeAgo = this.getTimeAgo(session.timestamp);
+
+            item.innerHTML = `
+                <div class="session-info">
+                    <span class="session-mode">${this.getModeName(session.mode)}</span>
+                    <span class="session-time">${timeAgo}</span>
+                </div>
+                <div class="session-score">
+                    <span class="session-score-value ${scoreClass}">${session.correct}/${session.attempted}</span>
+                    <span>(${accuracy}%)</span>
+                </div>
+            `;
+
+            container.appendChild(item);
+        });
+    }
+
+    // Render problem areas
+    renderProblemAreas() {
+        const container = document.getElementById('problem-areas');
+        if (!container) return;
+
+        container.innerHTML = '';
+
+        const types = [
+            { key: 'bonds', name: 'Number Bonds', icon: '🎯' },
+            { key: 'addition', name: 'Addition', icon: '➕' },
+            { key: 'subtraction', name: 'Subtraction', icon: '➖' }
+        ];
+
+        const areas = types.map(type => {
+            const stats = this.stats.byType?.[type.key] || { correct: 0, attempted: 0 };
+            const accuracy = stats.attempted > 0 ? (stats.correct / stats.attempted) * 100 : null;
+            return { ...type, accuracy, attempted: stats.attempted };
+        });
+
+        // Filter to only show types with some practice
+        const practiced = areas.filter(a => a.attempted > 0);
+
+        if (practiced.length === 0) {
+            container.innerHTML = '<div class="no-data-message">Practice more to see insights!</div>';
+            return;
+        }
+
+        // Sort by accuracy (lowest first = needs most work)
+        practiced.sort((a, b) => a.accuracy - b.accuracy);
+
+        practiced.forEach(area => {
+            const item = document.createElement('div');
+            const isGood = area.accuracy >= 80;
+            item.className = `problem-area-item ${isGood ? 'good' : ''}`;
+
+            const message = isGood
+                ? `${area.name}: Great job! ${Math.round(area.accuracy)}% accuracy`
+                : `${area.name}: Keep practicing! ${Math.round(area.accuracy)}% accuracy`;
+
+            item.innerHTML = `
+                <span class="problem-area-icon">${area.icon}</span>
+                <span class="problem-area-text">${message}</span>
+            `;
+
+            container.appendChild(item);
+        });
+    }
+
+    // Get human-readable time ago
+    getTimeAgo(timestamp) {
+        const seconds = Math.floor((Date.now() - timestamp) / 1000);
+
+        if (seconds < 60) return 'Just now';
+        if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';
+        if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
+        if (seconds < 604800) return Math.floor(seconds / 86400) + 'd ago';
+        return new Date(timestamp).toLocaleDateString();
+    }
+
+    // Reset all stats
+    resetAllStats() {
+        this.stats = {
+            stars: 0,
+            streak: 0,
+            bestStreak: 0,
+            totalCorrect: 0,
+            totalAttempted: 0,
+            trophies: [],
+            bestTimerScore: 0,
+            byType: {
+                bonds: { correct: 0, attempted: 0 },
+                addition: { correct: 0, attempted: 0 },
+                subtraction: { correct: 0, attempted: 0 }
+            }
+        };
+        this.sessions = [];
+
+        this.saveStats();
+        this.saveSessions();
+        this.updateStatsDisplay();
+        this.renderTrophies();
+        this.renderDashboard();
+
+        this.sound.playClick();
     }
 }
 
