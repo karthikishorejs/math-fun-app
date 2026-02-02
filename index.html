@@ -88,10 +88,174 @@
                 <div id="trophies"></div>
             </div>
 
-            <!-- Parent Dashboard Button -->
-            <button class="dashboard-btn" id="open-dashboard">
-                📊 Parent Dashboard
-            </button>
+            <!-- Parent Buttons -->
+            <div class="parent-buttons">
+                <button class="parent-btn guide-btn" id="open-guide">
+                    📖 How to Teach
+                </button>
+                <button class="parent-btn dashboard-btn" id="open-dashboard">
+                    📊 Dashboard
+                </button>
+            </div>
+        </section>
+
+        <!-- Teaching Guide Screen -->
+        <section id="guide-screen" class="screen">
+            <div class="guide-header">
+                <button class="back-btn" id="back-from-guide">← Back</button>
+                <h2>📖 Parent's Teaching Guide</h2>
+            </div>
+
+            <div class="guide-content">
+                <div class="guide-intro">
+                    <p><strong>"Thinking in 10s"</strong> is a powerful mental math strategy. When kids master number bonds to 10, math becomes much easier!</p>
+                </div>
+
+                <!-- Number Bonds Section -->
+                <div class="guide-section">
+                    <h3>🎯 Step 1: Number Bonds to 10</h3>
+                    <p class="guide-text">These are pairs of numbers that add up to 10. Kids should memorize these like sight words!</p>
+
+                    <div class="bonds-grid">
+                        <div class="bond-pair"><span>1</span><span>+</span><span>9</span><span>=</span><span>10</span></div>
+                        <div class="bond-pair"><span>2</span><span>+</span><span>8</span><span>=</span><span>10</span></div>
+                        <div class="bond-pair"><span>3</span><span>+</span><span>7</span><span>=</span><span>10</span></div>
+                        <div class="bond-pair"><span>4</span><span>+</span><span>6</span><span>=</span><span>10</span></div>
+                        <div class="bond-pair"><span>5</span><span>+</span><span>5</span><span>=</span><span>10</span></div>
+                    </div>
+
+                    <div class="guide-tip">
+                        <span class="tip-icon">💡</span>
+                        <span>Use your hands! Show 7 fingers, ask "How many more to make 10?"</span>
+                    </div>
+                </div>
+
+                <!-- Ten Frame Section -->
+                <div class="guide-section">
+                    <h3>🔲 Step 2: Using the Ten Frame</h3>
+                    <p class="guide-text">A ten frame helps kids SEE numbers. It has 10 boxes arranged in 2 rows of 5.</p>
+
+                    <div class="demo-ten-frame">
+                        <div class="demo-frame">
+                            <div class="demo-cell filled"></div>
+                            <div class="demo-cell filled"></div>
+                            <div class="demo-cell filled"></div>
+                            <div class="demo-cell filled"></div>
+                            <div class="demo-cell filled"></div>
+                            <div class="demo-cell filled"></div>
+                            <div class="demo-cell filled"></div>
+                            <div class="demo-cell empty"></div>
+                            <div class="demo-cell empty"></div>
+                            <div class="demo-cell empty"></div>
+                        </div>
+                        <p class="demo-label">7 filled + 3 empty = 10</p>
+                    </div>
+
+                    <div class="guide-tip">
+                        <span class="tip-icon">💡</span>
+                        <span>Ask: "How many dots? How many empty? How do you know?"</span>
+                    </div>
+                </div>
+
+                <!-- Make 10 Addition Section -->
+                <div class="guide-section">
+                    <h3>➕ Step 3: "Make 10" Addition</h3>
+                    <p class="guide-text">For problems like <strong>8 + 5</strong>, teach kids to "make 10 first":</p>
+
+                    <div class="example-box">
+                        <div class="example-step">
+                            <span class="step-num">1</span>
+                            <span class="step-text">8 + 5 = ?</span>
+                        </div>
+                        <div class="example-step">
+                            <span class="step-num">2</span>
+                            <span class="step-text">8 needs <strong>2</strong> more to make 10</span>
+                        </div>
+                        <div class="example-step">
+                            <span class="step-num">3</span>
+                            <span class="step-text">Take 2 from the 5 → leaves <strong>3</strong></span>
+                        </div>
+                        <div class="example-step">
+                            <span class="step-num">4</span>
+                            <span class="step-text">10 + 3 = <strong>13</strong> ✓</span>
+                        </div>
+                    </div>
+
+                    <div class="visual-example">
+                        <div class="demo-frame small">
+                            <div class="demo-cell filled blue"></div>
+                            <div class="demo-cell filled blue"></div>
+                            <div class="demo-cell filled blue"></div>
+                            <div class="demo-cell filled blue"></div>
+                            <div class="demo-cell filled blue"></div>
+                            <div class="demo-cell filled blue"></div>
+                            <div class="demo-cell filled blue"></div>
+                            <div class="demo-cell filled blue"></div>
+                            <div class="demo-cell filled orange"></div>
+                            <div class="demo-cell filled orange"></div>
+                        </div>
+                        <span class="plus-sign">+</span>
+                        <div class="remaining-dots">
+                            <div class="demo-cell filled orange"></div>
+                            <div class="demo-cell filled orange"></div>
+                            <div class="demo-cell filled orange"></div>
+                        </div>
+                        <span class="equals-sign">= 13</span>
+                    </div>
+                </div>
+
+                <!-- Subtraction Section -->
+                <div class="guide-section">
+                    <h3>➖ Step 4: Subtraction from 10</h3>
+                    <p class="guide-text">Once kids know bonds to 10, subtraction is easy!</p>
+
+                    <div class="example-box">
+                        <div class="example-step">
+                            <span class="step-num">1</span>
+                            <span class="step-text">10 - 4 = ?</span>
+                        </div>
+                        <div class="example-step">
+                            <span class="step-num">2</span>
+                            <span class="step-text">Think: "4 + ? = 10"</span>
+                        </div>
+                        <div class="example-step">
+                            <span class="step-num">3</span>
+                            <span class="step-text">I know 4 + <strong>6</strong> = 10</span>
+                        </div>
+                        <div class="example-step">
+                            <span class="step-num">4</span>
+                            <span class="step-text">So 10 - 4 = <strong>6</strong> ✓</span>
+                        </div>
+                    </div>
+
+                    <div class="guide-tip">
+                        <span class="tip-icon">💡</span>
+                        <span>Subtraction is just the "opposite" of the number bond!</span>
+                    </div>
+                </div>
+
+                <!-- Practice Tips -->
+                <div class="guide-section">
+                    <h3>🌟 Tips for Practice</h3>
+                    <ul class="tips-list">
+                        <li><strong>Start with Easy mode</strong> - builds confidence with smaller numbers</li>
+                        <li><strong>Short sessions</strong> - 5-10 minutes daily is better than long sessions</li>
+                        <li><strong>Celebrate streaks</strong> - the streak counter motivates consistency</li>
+                        <li><strong>Use the ten frame</strong> - encourage kids to look at the visual</li>
+                        <li><strong>No pressure</strong> - wrong answers show the correct one to learn from</li>
+                    </ul>
+                </div>
+
+                <!-- Quick Reference -->
+                <div class="guide-section reference">
+                    <h3>📋 Quick Reference: All Bonds to 10</h3>
+                    <div class="reference-grid">
+                        <span>0+10</span><span>1+9</span><span>2+8</span><span>3+7</span><span>4+6</span><span>5+5</span>
+                    </div>
+                </div>
+
+                <button class="start-practice-btn" id="start-from-guide">🎮 Start Practice!</button>
+            </div>
         </section>
 
         <!-- Parent Dashboard Screen -->

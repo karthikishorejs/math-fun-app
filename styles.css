@@ -1125,3 +1125,373 @@ body {
         width: 20px;
     }
 }
+
+/* Parent Buttons */
+.parent-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.parent-btn {
+    flex: 1;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.parent-btn:active {
+    transform: scale(0.95);
+}
+
+.guide-btn {
+    background: linear-gradient(135deg, #26A69A 0%, #00897B 100%);
+    color: white;
+}
+
+.dashboard-btn {
+    background: linear-gradient(135deg, #607D8B 0%, #455A64 100%);
+    color: white;
+}
+
+/* Teaching Guide Screen */
+#guide-screen {
+    padding: 15px;
+    background: #f5f5f5;
+}
+
+.guide-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.guide-header h2 {
+    color: var(--text-dark);
+    font-size: 1.3rem;
+}
+
+.guide-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding-bottom: 20px;
+}
+
+.guide-intro {
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-green);
+}
+
+.guide-intro p {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.guide-section {
+    background: white;
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: var(--shadow-small);
+}
+
+.guide-section h3 {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.guide-text {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+/* Number Bonds Grid */
+.bonds-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.bond-pair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.bond-pair span:nth-child(1),
+.bond-pair span:nth-child(3) {
+    color: var(--primary-blue);
+    min-width: 25px;
+    text-align: center;
+}
+
+.bond-pair span:nth-child(5) {
+    color: var(--primary-green);
+    min-width: 25px;
+    text-align: center;
+}
+
+.bond-pair span:nth-child(2),
+.bond-pair span:nth-child(4) {
+    color: var(--text-light);
+}
+
+/* Guide Tips */
+.guide-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 12px;
+    background: #FFF8E1;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.tip-icon {
+    font-size: 1.2rem;
+}
+
+.guide-tip span:last-child {
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    line-height: 1.4;
+}
+
+/* Demo Ten Frame */
+.demo-ten-frame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.demo-frame {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    padding: 8px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+}
+
+.demo-frame.small {
+    padding: 6px;
+    gap: 3px;
+}
+
+.demo-cell {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    background: white;
+}
+
+.demo-frame.small .demo-cell {
+    width: 24px;
+    height: 24px;
+}
+
+.demo-cell.filled {
+    background: var(--primary-blue);
+    border-color: #357ABD;
+}
+
+.demo-cell.filled.blue {
+    background: var(--primary-blue);
+    border-color: #357ABD;
+}
+
+.demo-cell.filled.orange {
+    background: var(--primary-orange);
+    border-color: #E09100;
+}
+
+.demo-cell.empty {
+    background: white;
+    border: 2px dashed #ccc;
+}
+
+.demo-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Visual Example */
+.visual-example {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+}
+
+.plus-sign, .equals-sign {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.remaining-dots {
+    display: flex;
+    gap: 3px;
+}
+
+.remaining-dots .demo-cell {
+    width: 24px;
+    height: 24px;
+}
+
+/* Example Box */
+.example-box {
+    background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
+    border-radius: 12px;
+    padding: 15px;
+    margin: 10px 0;
+}
+
+.example-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.example-step:not(:last-child) {
+    border-bottom: 1px dashed rgba(0,0,0,0.1);
+}
+
+.step-num {
+    width: 24px;
+    height: 24px;
+    background: var(--primary-purple);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.step-text {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+/* Tips List */
+.tips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.tips-list li {
+    padding: 10px 0;
+    padding-left: 25px;
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    line-height: 1.4;
+}
+
+.tips-list li:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+.tips-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--primary-green);
+    font-weight: bold;
+}
+
+/* Quick Reference */
+.guide-section.reference {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.guide-section.reference h3 {
+    color: white;
+}
+
+.reference-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.reference-grid span {
+    background: rgba(255,255,255,0.9);
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--primary-purple);
+}
+
+/* Start Practice Button */
+.start-practice-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary-green) 0%, #449D44 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.start-practice-btn:active {
+    transform: scale(0.98);
+}
+
+/* Guide Responsive */
+@media (max-width: 400px) {
+    .parent-buttons {
+        flex-direction: column;
+    }
+
+    .bond-pair {
+        font-size: 1rem;
+        padding: 8px;
+    }
+
+    .demo-cell {
+        width: 28px;
+        height: 28px;
+    }
+
+    .reference-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

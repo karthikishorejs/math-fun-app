@@ -142,7 +142,8 @@ class MathFunApp {
             menu: document.getElementById('menu-screen'),
             game: document.getElementById('game-screen'),
             results: document.getElementById('results-screen'),
-            dashboard: document.getElementById('dashboard-screen')
+            dashboard: document.getElementById('dashboard-screen'),
+            guide: document.getElementById('guide-screen')
         };
 
         this.elements = {
@@ -341,6 +342,24 @@ class MathFunApp {
 
         // Back from dashboard
         document.getElementById('back-from-dashboard').addEventListener('click', () => {
+            this.sound.playClick();
+            this.showScreen('menu');
+        });
+
+        // Guide button
+        document.getElementById('open-guide').addEventListener('click', () => {
+            this.sound.playClick();
+            this.showScreen('guide');
+        });
+
+        // Back from guide
+        document.getElementById('back-from-guide').addEventListener('click', () => {
+            this.sound.playClick();
+            this.showScreen('menu');
+        });
+
+        // Start practice from guide
+        document.getElementById('start-from-guide').addEventListener('click', () => {
             this.sound.playClick();
             this.showScreen('menu');
         });
