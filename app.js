@@ -666,16 +666,33 @@ class MathFunApp {
 
         // Generate wrong answers
         const answers = new Set([correctAnswer]);
-        while (answers.size < numChoices) {
+        let attempts = 0;
+        const maxAttempts = 100; // Prevent infinite loop
+
+        while (answers.size < numChoices && attempts < maxAttempts) {
+            attempts++;
             let wrong;
+
+            // Expand the range progressively if we're having trouble finding unique answers
+            const range = Math.min(5 + Math.floor(attempts / 10), 15);
+
             if (correctAnswer <= 10) {
-                wrong = Math.max(0, Math.min(20, correctAnswer + (Math.floor(Math.random() * 5) - 2)));
+                wrong = Math.max(0, Math.min(20, correctAnswer + (Math.floor(Math.random() * (range * 2 + 1)) - range)));
             } else {
-                wrong = Math.max(0, Math.min(20, correctAnswer + (Math.floor(Math.random() * 7) - 3)));
+                wrong = Math.max(0, Math.min(20, correctAnswer + (Math.floor(Math.random() * (range * 2 + 1)) - range)));
             }
             if (wrong !== correctAnswer) {
                 answers.add(wrong);
             }
+        }
+
+        // If we still don't have enough answers, fill with sequential numbers
+        let fillNum = 0;
+        while (answers.size < numChoices && fillNum <= 20) {
+            if (fillNum !== correctAnswer) {
+                answers.add(fillNum);
+            }
+            fillNum++;
         }
 
         // Shuffle answers
