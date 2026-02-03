@@ -664,42 +664,37 @@ class MathFunApp {
         const settings = this.getDifficultySettings();
         const numChoices = settings.answerChoices;
 
-        // Generate wrong answers
-        const answers = new Set([correctAnswer]);
-        let attempts = 0;
-        const maxAttempts = 100; // Prevent infinite loop
-
-        while (answers.size < numChoices && attempts < maxAttempts) {
-            attempts++;
-            let wrong;
-
-            // Expand the range progressively if we're having trouble finding unique answers
-            const range = Math.min(5 + Math.floor(attempts / 10), 15);
-
-            if (correctAnswer <= 10) {
-                wrong = Math.max(0, Math.min(20, correctAnswer + (Math.floor(Math.random() * (range * 2 + 1)) - range)));
-            } else {
-                wrong = Math.max(0, Math.min(20, correctAnswer + (Math.floor(Math.random() * (range * 2 + 1)) - range)));
-            }
-            if (wrong !== correctAnswer) {
-                answers.add(wrong);
+        // Build a pool of possible wrong answers (0-20 excluding correct answer)
+        const possibleAnswers = [];
+        for (let i = 0; i <= 20; i++) {
+            if (i !== correctAnswer) {
+                possibleAnswers.push(i);
             }
         }
 
-        // If we still don't have enough answers, fill with sequential numbers
-        let fillNum = 0;
-        while (answers.size < numChoices && fillNum <= 20) {
-            if (fillNum !== correctAnswer) {
-                answers.add(fillNum);
-            }
-            fillNum++;
+        // Shuffle the pool
+        for (let i = possibleAnswers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [possibleAnswers[i], possibleAnswers[j]] = [possibleAnswers[j], possibleAnswers[i]];
         }
 
-        // Shuffle answers
-        const shuffled = Array.from(answers).sort(() => Math.random() - 0.5);
+        // Sort by proximity to correct answer (closer answers first for better difficulty)
+        possibleAnswers.sort((a, b) => Math.abs(a - correctAnswer) - Math.abs(b - correctAnswer));
+
+        // Take the first (numChoices - 1) wrong answers
+        const wrongAnswers = possibleAnswers.slice(0, numChoices - 1);
+
+        // Combine with correct answer
+        const allAnswers = [correctAnswer, ...wrongAnswers];
+
+        // Shuffle final answers
+        for (let i = allAnswers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allAnswers[i], allAnswers[j]] = [allAnswers[j], allAnswers[i]];
+        }
 
         // Create buttons
-        shuffled.forEach(answer => {
+        allAnswers.forEach(answer => {
             const btn = document.createElement('button');
             btn.className = 'answer-btn';
             btn.textContent = answer;
