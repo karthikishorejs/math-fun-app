@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Math Fun">
-    <title>Math Fun - Learn to Think in 10s!</title>
+    <meta name="apple-mobile-web-app-title" content="Learn Fun">
+    <title>Learn Fun - Math & Reading Adventures!</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -29,12 +29,59 @@
             </div>
         </header>
 
-        <!-- Main Menu Screen -->
-        <section id="menu-screen" class="screen active">
-            <h1 class="title">🧮 Math Fun!</h1>
-            <p class="subtitle">Let's Think in 10s!</p>
+        <!-- Subject Selection Screen (NEW HOME) -->
+        <section id="home-screen" class="screen active">
+            <h1 class="title">🌟 Learn Fun!</h1>
+            <p class="subtitle">Choose your adventure!</p>
 
-            <div class="menu-buttons">
+            <div class="subject-cards">
+                <button class="subject-card math-card" id="go-to-math">
+                    <span class="subject-icon">🧮</span>
+                    <span class="subject-title">Math</span>
+                    <span class="subject-desc">Numbers & Problem Solving</span>
+                </button>
+
+                <button class="subject-card reading-card" id="go-to-reading">
+                    <span class="subject-icon">📚</span>
+                    <span class="subject-title">Reading</span>
+                    <span class="subject-desc">Words & Sentences</span>
+                </button>
+            </div>
+
+            <div class="trophy-case">
+                <h3>🏆 Trophy Case</h3>
+                <div id="trophies"></div>
+            </div>
+
+            <!-- Parent Buttons -->
+            <div class="parent-buttons">
+                <button class="parent-btn guide-btn" id="open-guide">
+                    📖 How to Teach
+                </button>
+                <button class="parent-btn dashboard-btn" id="open-dashboard">
+                    📊 Dashboard
+                </button>
+            </div>
+        </section>
+
+        <!-- Math Menu Screen -->
+        <section id="math-menu-screen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" id="back-from-math-menu">← Back</button>
+                <h2>🧮 Math Adventures</h2>
+            </div>
+
+            <div class="level-selector">
+                <span class="level-label">Level:</span>
+                <div class="level-buttons" id="math-level-buttons">
+                    <button class="level-btn active" data-level="1">Level 1</button>
+                    <button class="level-btn" data-level="2">Level 2</button>
+                    <button class="level-btn" data-level="3">Level 3</button>
+                </div>
+            </div>
+
+            <div class="menu-buttons" id="math-menu-buttons">
+                <!-- Level 1: Numbers to 20 -->
                 <button class="menu-btn bonds-btn" data-mode="bonds">
                     <span class="btn-icon">🎯</span>
                     <span class="btn-text">Number Bonds to 10</span>
@@ -82,20 +129,63 @@
                     <button class="sound-toggle" id="sound-toggle">🔊 On</button>
                 </div>
             </div>
+        </section>
 
-            <div class="trophy-case">
-                <h3>🏆 Trophy Case</h3>
-                <div id="trophies"></div>
+        <!-- Reading Menu Screen -->
+        <section id="reading-menu-screen" class="screen">
+            <div class="screen-header">
+                <button class="back-btn" id="back-from-reading-menu">← Back</button>
+                <h2>📚 Reading Adventures</h2>
             </div>
 
-            <!-- Parent Buttons -->
-            <div class="parent-buttons">
-                <button class="parent-btn guide-btn" id="open-guide">
-                    📖 How to Teach
+            <div class="level-selector">
+                <span class="level-label">Level:</span>
+                <div class="level-buttons" id="reading-level-buttons">
+                    <button class="level-btn active" data-level="1">Level 1</button>
+                    <button class="level-btn" data-level="2">Level 2</button>
+                    <button class="level-btn" data-level="3">Level 3</button>
+                </div>
+            </div>
+
+            <div class="menu-buttons">
+                <button class="menu-btn sight-words-btn" data-mode="sight-words">
+                    <span class="btn-icon">👀</span>
+                    <span class="btn-text">Sight Words</span>
+                    <span class="btn-desc">Learn common words by sight</span>
                 </button>
-                <button class="parent-btn dashboard-btn" id="open-dashboard">
-                    📊 Dashboard
+
+                <button class="menu-btn word-match-btn" data-mode="word-to-picture">
+                    <span class="btn-icon">🖼️</span>
+                    <span class="btn-text">Word to Picture</span>
+                    <span class="btn-desc">Match words to images</span>
                 </button>
+
+                <button class="menu-btn spelling-btn" data-mode="spelling">
+                    <span class="btn-icon">✏️</span>
+                    <span class="btn-text">Spelling</span>
+                    <span class="btn-desc">Spell the word you hear</span>
+                </button>
+
+                <button class="menu-btn sentence-btn" data-mode="sentence-reading">
+                    <span class="btn-icon">📖</span>
+                    <span class="btn-text">Sentence Reading</span>
+                    <span class="btn-desc">Read and understand sentences</span>
+                </button>
+
+                <button class="menu-btn reading-timer-btn" data-mode="reading-timer">
+                    <span class="btn-icon">⏱️</span>
+                    <span class="btn-text">Speed Reading</span>
+                    <span class="btn-desc">Read words quickly!</span>
+                </button>
+            </div>
+
+            <!-- Settings -->
+            <div class="settings-section">
+                <h3>⚙️ Settings</h3>
+                <div class="setting-row">
+                    <label>Sound:</label>
+                    <button class="sound-toggle reading-sound-toggle" id="reading-sound-toggle">🔊 On</button>
+                </div>
             </div>
         </section>
 
@@ -107,150 +197,87 @@
             </div>
 
             <div class="guide-content">
-                <div class="guide-intro">
-                    <p><strong>"Thinking in 10s"</strong> is a powerful mental math strategy. When kids master number bonds to 10, math becomes much easier!</p>
+                <!-- Guide Tabs -->
+                <div class="guide-tabs">
+                    <button class="guide-tab active" data-tab="math">🧮 Math</button>
+                    <button class="guide-tab" data-tab="reading">📚 Reading</button>
                 </div>
 
-                <!-- Number Bonds Section -->
-                <div class="guide-section">
-                    <h3>🎯 Step 1: Number Bonds to 10</h3>
-                    <p class="guide-text">These are pairs of numbers that add up to 10. Kids should memorize these like sight words!</p>
-
-                    <div class="bonds-grid">
-                        <div class="bond-pair"><span>1</span><span>+</span><span>9</span><span>=</span><span>10</span></div>
-                        <div class="bond-pair"><span>2</span><span>+</span><span>8</span><span>=</span><span>10</span></div>
-                        <div class="bond-pair"><span>3</span><span>+</span><span>7</span><span>=</span><span>10</span></div>
-                        <div class="bond-pair"><span>4</span><span>+</span><span>6</span><span>=</span><span>10</span></div>
-                        <div class="bond-pair"><span>5</span><span>+</span><span>5</span><span>=</span><span>10</span></div>
+                <!-- Math Guide Content -->
+                <div class="guide-tab-content active" id="math-guide">
+                    <div class="guide-intro">
+                        <p><strong>"Thinking in 10s"</strong> is a powerful mental math strategy. When kids master number bonds to 10, math becomes much easier!</p>
                     </div>
 
-                    <div class="guide-tip">
-                        <span class="tip-icon">💡</span>
-                        <span>Use your hands! Show 7 fingers, ask "How many more to make 10?"</span>
-                    </div>
-                </div>
-
-                <!-- Ten Frame Section -->
-                <div class="guide-section">
-                    <h3>🔲 Step 2: Using the Ten Frame</h3>
-                    <p class="guide-text">A ten frame helps kids SEE numbers. It has 10 boxes arranged in 2 rows of 5.</p>
-
-                    <div class="demo-ten-frame">
-                        <div class="demo-frame">
-                            <div class="demo-cell filled"></div>
-                            <div class="demo-cell filled"></div>
-                            <div class="demo-cell filled"></div>
-                            <div class="demo-cell filled"></div>
-                            <div class="demo-cell filled"></div>
-                            <div class="demo-cell filled"></div>
-                            <div class="demo-cell filled"></div>
-                            <div class="demo-cell empty"></div>
-                            <div class="demo-cell empty"></div>
-                            <div class="demo-cell empty"></div>
-                        </div>
-                        <p class="demo-label">7 filled + 3 empty = 10</p>
-                    </div>
-
-                    <div class="guide-tip">
-                        <span class="tip-icon">💡</span>
-                        <span>Ask: "How many dots? How many empty? How do you know?"</span>
-                    </div>
-                </div>
-
-                <!-- Make 10 Addition Section -->
-                <div class="guide-section">
-                    <h3>➕ Step 3: "Make 10" Addition</h3>
-                    <p class="guide-text">For problems like <strong>8 + 5</strong>, teach kids to "make 10 first":</p>
-
-                    <div class="example-box">
-                        <div class="example-step">
-                            <span class="step-num">1</span>
-                            <span class="step-text">8 + 5 = ?</span>
-                        </div>
-                        <div class="example-step">
-                            <span class="step-num">2</span>
-                            <span class="step-text">8 needs <strong>2</strong> more to make 10</span>
-                        </div>
-                        <div class="example-step">
-                            <span class="step-num">3</span>
-                            <span class="step-text">Take 2 from the 5 → leaves <strong>3</strong></span>
-                        </div>
-                        <div class="example-step">
-                            <span class="step-num">4</span>
-                            <span class="step-text">10 + 3 = <strong>13</strong> ✓</span>
+                    <div class="guide-section">
+                        <h3>🎯 Number Bonds to 10</h3>
+                        <p class="guide-text">These are pairs of numbers that add up to 10. Kids should memorize these like sight words!</p>
+                        <div class="bonds-grid">
+                            <div class="bond-pair"><span>1</span><span>+</span><span>9</span><span>=</span><span>10</span></div>
+                            <div class="bond-pair"><span>2</span><span>+</span><span>8</span><span>=</span><span>10</span></div>
+                            <div class="bond-pair"><span>3</span><span>+</span><span>7</span><span>=</span><span>10</span></div>
+                            <div class="bond-pair"><span>4</span><span>+</span><span>6</span><span>=</span><span>10</span></div>
+                            <div class="bond-pair"><span>5</span><span>+</span><span>5</span><span>=</span><span>10</span></div>
                         </div>
                     </div>
 
-                    <div class="visual-example">
-                        <div class="demo-frame small">
-                            <div class="demo-cell filled blue"></div>
-                            <div class="demo-cell filled blue"></div>
-                            <div class="demo-cell filled blue"></div>
-                            <div class="demo-cell filled blue"></div>
-                            <div class="demo-cell filled blue"></div>
-                            <div class="demo-cell filled blue"></div>
-                            <div class="demo-cell filled blue"></div>
-                            <div class="demo-cell filled blue"></div>
-                            <div class="demo-cell filled orange"></div>
-                            <div class="demo-cell filled orange"></div>
+                    <div class="guide-section">
+                        <h3>🔢 Two-Digit Addition (Level 2-3)</h3>
+                        <p class="guide-text">For bigger numbers like <strong>34 + 28</strong>, break it into tens and ones:</p>
+                        <div class="example-box">
+                            <div class="example-step">
+                                <span class="step-num">1</span>
+                                <span class="step-text">34 + 28 = ?</span>
+                            </div>
+                            <div class="example-step">
+                                <span class="step-num">2</span>
+                                <span class="step-text">Add tens: 30 + 20 = <strong>50</strong></span>
+                            </div>
+                            <div class="example-step">
+                                <span class="step-num">3</span>
+                                <span class="step-text">Add ones: 4 + 8 = <strong>12</strong></span>
+                            </div>
+                            <div class="example-step">
+                                <span class="step-num">4</span>
+                                <span class="step-text">Combine: 50 + 12 = <strong>62</strong> ✓</span>
+                            </div>
                         </div>
-                        <span class="plus-sign">+</span>
-                        <div class="remaining-dots">
-                            <div class="demo-cell filled orange"></div>
-                            <div class="demo-cell filled orange"></div>
-                            <div class="demo-cell filled orange"></div>
+                    </div>
+
+                    <div class="guide-section reference">
+                        <h3>📋 Math Levels</h3>
+                        <div class="levels-reference">
+                            <div class="level-ref"><strong>Level 1:</strong> Numbers to 20</div>
+                            <div class="level-ref"><strong>Level 2:</strong> Numbers to 50</div>
+                            <div class="level-ref"><strong>Level 3:</strong> Numbers to 100</div>
                         </div>
-                        <span class="equals-sign">= 13</span>
                     </div>
                 </div>
 
-                <!-- Subtraction Section -->
-                <div class="guide-section">
-                    <h3>➖ Step 4: Subtraction from 10</h3>
-                    <p class="guide-text">Once kids know bonds to 10, subtraction is easy!</p>
+                <!-- Reading Guide Content -->
+                <div class="guide-tab-content" id="reading-guide">
+                    <div class="guide-intro">
+                        <p><strong>Sight words</strong> are common words that kids should recognize instantly without sounding out. They make up 50-75% of text in children's books!</p>
+                    </div>
 
-                    <div class="example-box">
-                        <div class="example-step">
-                            <span class="step-num">1</span>
-                            <span class="step-text">10 - 4 = ?</span>
-                        </div>
-                        <div class="example-step">
-                            <span class="step-num">2</span>
-                            <span class="step-text">Think: "4 + ? = 10"</span>
-                        </div>
-                        <div class="example-step">
-                            <span class="step-num">3</span>
-                            <span class="step-text">I know 4 + <strong>6</strong> = 10</span>
-                        </div>
-                        <div class="example-step">
-                            <span class="step-num">4</span>
-                            <span class="step-text">So 10 - 4 = <strong>6</strong> ✓</span>
+                    <div class="guide-section">
+                        <h3>👀 Sight Word Levels</h3>
+                        <div class="levels-reference">
+                            <div class="level-ref"><strong>Level 1:</strong> the, and, a, to, is, in, it, you, that, he</div>
+                            <div class="level-ref"><strong>Level 2:</strong> was, for, on, are, with, his, they, at, be, this</div>
+                            <div class="level-ref"><strong>Level 3:</strong> have, from, by, not, but, what, all, were, when, there</div>
                         </div>
                     </div>
 
-                    <div class="guide-tip">
-                        <span class="tip-icon">💡</span>
-                        <span>Subtraction is just the "opposite" of the number bond!</span>
-                    </div>
-                </div>
-
-                <!-- Practice Tips -->
-                <div class="guide-section">
-                    <h3>🌟 Tips for Practice</h3>
-                    <ul class="tips-list">
-                        <li><strong>Start with Easy mode</strong> - builds confidence with smaller numbers</li>
-                        <li><strong>Short sessions</strong> - 5-10 minutes daily is better than long sessions</li>
-                        <li><strong>Celebrate streaks</strong> - the streak counter motivates consistency</li>
-                        <li><strong>Use the ten frame</strong> - encourage kids to look at the visual</li>
-                        <li><strong>No pressure</strong> - wrong answers show the correct one to learn from</li>
-                    </ul>
-                </div>
-
-                <!-- Quick Reference -->
-                <div class="guide-section reference">
-                    <h3>📋 Quick Reference: All Bonds to 10</h3>
-                    <div class="reference-grid">
-                        <span>0+10</span><span>1+9</span><span>2+8</span><span>3+7</span><span>4+6</span><span>5+5</span>
+                    <div class="guide-section">
+                        <h3>💡 Tips for Reading Practice</h3>
+                        <ul class="tips-list">
+                            <li><strong>Flash quickly</strong> - Sight words should be recognized in under 3 seconds</li>
+                            <li><strong>Say it aloud</strong> - Have your child say the word out loud</li>
+                            <li><strong>Use in sentences</strong> - "Can you find 'the' in this book?"</li>
+                            <li><strong>Write it</strong> - Practice writing helps memory</li>
+                            <li><strong>Make it fun</strong> - Play games, use rewards!</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -266,6 +293,12 @@
             </div>
 
             <div class="dashboard-content">
+                <!-- Dashboard Tabs -->
+                <div class="dashboard-tabs">
+                    <button class="dash-tab active" data-tab="math">🧮 Math</button>
+                    <button class="dash-tab" data-tab="reading">📚 Reading</button>
+                </div>
+
                 <!-- Overview Cards -->
                 <div class="dashboard-cards">
                     <div class="dash-card">
@@ -286,8 +319,8 @@
                 </div>
 
                 <!-- Accuracy by Type -->
-                <div class="dashboard-section">
-                    <h3>📈 Accuracy by Problem Type</h3>
+                <div class="dashboard-section" id="math-accuracy-section">
+                    <h3>📈 Math Accuracy by Type</h3>
                     <div class="accuracy-bars">
                         <div class="accuracy-row">
                             <span class="accuracy-label">🎯 Number Bonds</span>
@@ -313,28 +346,50 @@
                     </div>
                 </div>
 
+                <!-- Reading Accuracy -->
+                <div class="dashboard-section" id="reading-accuracy-section" style="display: none;">
+                    <h3>📈 Reading Accuracy by Type</h3>
+                    <div class="accuracy-bars">
+                        <div class="accuracy-row">
+                            <span class="accuracy-label">👀 Sight Words</span>
+                            <div class="accuracy-bar-container">
+                                <div class="accuracy-bar reading-bar" id="accuracy-sight-words" style="width: 0%"></div>
+                            </div>
+                            <span class="accuracy-percent" id="accuracy-sight-words-text">0%</span>
+                        </div>
+                        <div class="accuracy-row">
+                            <span class="accuracy-label">🖼️ Word Match</span>
+                            <div class="accuracy-bar-container">
+                                <div class="accuracy-bar reading-bar" id="accuracy-word-match" style="width: 0%"></div>
+                            </div>
+                            <span class="accuracy-percent" id="accuracy-word-match-text">0%</span>
+                        </div>
+                        <div class="accuracy-row">
+                            <span class="accuracy-label">✏️ Spelling</span>
+                            <div class="accuracy-bar-container">
+                                <div class="accuracy-bar reading-bar" id="accuracy-spelling" style="width: 0%"></div>
+                            </div>
+                            <span class="accuracy-percent" id="accuracy-spelling-text">0%</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Weekly Progress -->
                 <div class="dashboard-section">
                     <h3>📅 Last 7 Days</h3>
-                    <div class="weekly-chart" id="weekly-chart">
-                        <!-- Generated by JS -->
-                    </div>
+                    <div class="weekly-chart" id="weekly-chart"></div>
                 </div>
 
                 <!-- Recent Sessions -->
                 <div class="dashboard-section">
                     <h3>🕐 Recent Sessions</h3>
-                    <div class="sessions-list" id="sessions-list">
-                        <!-- Generated by JS -->
-                    </div>
+                    <div class="sessions-list" id="sessions-list"></div>
                 </div>
 
                 <!-- Problem Areas -->
                 <div class="dashboard-section">
                     <h3>💡 Areas to Practice</h3>
-                    <div class="problem-areas" id="problem-areas">
-                        <!-- Generated by JS -->
-                    </div>
+                    <div class="problem-areas" id="problem-areas"></div>
                 </div>
 
                 <!-- Reset Stats -->
@@ -342,7 +397,7 @@
             </div>
         </section>
 
-        <!-- Game Screen -->
+        <!-- Math Game Screen -->
         <section id="game-screen" class="screen">
             <div class="game-top-bar">
                 <button class="back-btn" id="back-to-menu">← Back</button>
@@ -355,12 +410,24 @@
             <div class="game-area">
                 <h2 id="game-mode-title" class="mode-title">Number Bonds</h2>
 
-                <!-- Ten Frame Visual -->
-                <div class="ten-frame-container">
-                    <div class="ten-frame" id="ten-frame">
-                        <!-- 10 cells will be generated by JS -->
-                    </div>
+                <!-- Ten Frame Visual (for Level 1) -->
+                <div class="ten-frame-container" id="ten-frame-container">
+                    <div class="ten-frame" id="ten-frame"></div>
                     <p class="ten-frame-label">Ten Frame</p>
+                </div>
+
+                <!-- Place Value Visual (for Level 2-3) -->
+                <div class="place-value-container" id="place-value-container" style="display: none;">
+                    <div class="place-value-display">
+                        <div class="pv-section tens-section">
+                            <div class="pv-blocks" id="pv-tens"></div>
+                            <span class="pv-label">Tens</span>
+                        </div>
+                        <div class="pv-section ones-section">
+                            <div class="pv-blocks" id="pv-ones"></div>
+                            <span class="pv-label">Ones</span>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Problem Display -->
@@ -373,9 +440,7 @@
                 </div>
 
                 <!-- Answer Choices -->
-                <div class="answers-container" id="answers">
-                    <!-- Answer buttons generated by JS -->
-                </div>
+                <div class="answers-container" id="answers"></div>
 
                 <!-- Feedback Area -->
                 <div class="feedback-area" id="feedback">
@@ -389,6 +454,57 @@
                         <div class="progress-fill" id="progress-fill"></div>
                     </div>
                     <span class="progress-text"><span id="current-problem">1</span> / <span id="total-problems">10</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reading Game Screen -->
+        <section id="reading-game-screen" class="screen">
+            <div class="game-top-bar">
+                <button class="back-btn" id="back-to-reading-menu">← Back</button>
+                <div class="timer-display reading-timer" id="reading-timer-display">
+                    <span class="timer-icon">⏱️</span>
+                    <span id="reading-timer-value">60</span>
+                </div>
+            </div>
+
+            <div class="game-area reading-game-area">
+                <h2 id="reading-mode-title" class="mode-title">Sight Words</h2>
+
+                <!-- Word Display -->
+                <div class="word-display-container">
+                    <div class="word-card" id="word-card">
+                        <span class="display-word" id="display-word">the</span>
+                    </div>
+                    <button class="speak-btn" id="speak-word">🔊 Hear it</button>
+                </div>
+
+                <!-- Picture Display (for word-to-picture mode) -->
+                <div class="picture-container" id="picture-container" style="display: none;">
+                    <div class="picture-display" id="picture-display">🍎</div>
+                </div>
+
+                <!-- Spelling Input (for spelling mode) -->
+                <div class="spelling-container" id="spelling-container" style="display: none;">
+                    <input type="text" class="spelling-input" id="spelling-input" placeholder="Type the word..." autocomplete="off" autocapitalize="none">
+                    <button class="submit-spelling-btn" id="submit-spelling">Check ✓</button>
+                </div>
+
+                <!-- Answer Choices -->
+                <div class="reading-answers-container" id="reading-answers"></div>
+
+                <!-- Feedback Area -->
+                <div class="feedback-area" id="reading-feedback">
+                    <span class="feedback-emoji"></span>
+                    <span class="feedback-text"></span>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill reading-progress" id="reading-progress-fill"></div>
+                    </div>
+                    <span class="progress-text"><span id="reading-current-problem">1</span> / <span id="reading-total-problems">10</span></span>
                 </div>
             </div>
         </section>
@@ -419,9 +535,7 @@
                     <span class="result-label">Time</span>
                 </div>
 
-                <div class="reward-animation" id="reward-animation">
-                    <!-- Stars will animate here -->
-                </div>
+                <div class="reward-animation" id="reward-animation"></div>
 
                 <div class="results-buttons">
                     <button class="results-btn play-again-btn" id="play-again">Play Again</button>

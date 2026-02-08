@@ -91,12 +91,132 @@ body {
     display: flex;
 }
 
-/* Menu Screen Styles */
-#menu-screen {
+/* Home Screen Styles */
+#home-screen {
     align-items: center;
     justify-content: flex-start;
     gap: 20px;
     padding-top: 30px;
+}
+
+/* Menu Screen Styles */
+#menu-screen,
+#math-menu-screen,
+#reading-menu-screen {
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    padding-top: 15px;
+}
+
+/* Screen Header */
+.screen-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.screen-header h2 {
+    color: var(--text-dark);
+    font-size: 1.4rem;
+}
+
+/* Subject Cards */
+.subject-cards {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    margin: 10px 0;
+}
+
+.subject-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 25px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-small);
+}
+
+.subject-card:active {
+    transform: scale(0.95);
+}
+
+.math-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.reading-card {
+    background: linear-gradient(135deg, #26A69A 0%, #00897B 100%);
+    color: white;
+}
+
+.subject-icon {
+    font-size: 3rem;
+}
+
+.subject-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.subject-desc {
+    font-size: 0.8rem;
+    opacity: 0.9;
+}
+
+/* Level Selector */
+.level-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 15px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 15px;
+}
+
+.level-label {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.level-buttons {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    justify-content: flex-end;
+}
+
+.level-btn {
+    padding: 8px 14px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    background: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.85rem;
+}
+
+.level-btn:active {
+    transform: scale(0.95);
+}
+
+.level-btn.active {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #357ABD 100%);
+    color: white;
+    border-color: var(--primary-blue);
 }
 
 .title {
@@ -1493,5 +1613,727 @@ body {
 
     .reference-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ================================================
+   PLACE VALUE DISPLAY (Two-Digit Numbers)
+   ================================================ */
+.place-value-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 20px;
+    box-shadow: var(--shadow-small);
+    width: 100%;
+    max-width: 400px;
+}
+
+.place-value-display {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 20px;
+    min-height: 120px;
+}
+
+.place-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.place-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+}
+
+.tens-blocks {
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+    min-height: 80px;
+}
+
+.ten-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ten-block-unit {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, #4A90D9 0%, #357ABD 100%);
+    border-radius: 2px;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
+}
+
+.ones-blocks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    min-height: 50px;
+    align-content: start;
+}
+
+.one-block {
+    width: 18px;
+    height: 18px;
+    background: linear-gradient(135deg, #F5A623 0%, #E09100 100%);
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
+}
+
+.place-value-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-top: 5px;
+}
+
+/* ================================================
+   READING GAME SCREEN
+   ================================================ */
+#reading-game-screen {
+    padding: 15px;
+}
+
+/* Reading Game Area */
+.reading-game-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+/* Word Card Display */
+.word-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 30px 40px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 25px;
+    box-shadow: var(--shadow);
+    min-width: 250px;
+    min-height: 150px;
+    transition: all 0.3s ease;
+}
+
+.word-card.correct {
+    background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
+    animation: cardPulse 0.5s ease;
+}
+
+.word-card.incorrect {
+    background: linear-gradient(135deg, #FFCDD2 0%, #EF9A9A 100%);
+    animation: shake 0.5s ease;
+}
+
+@keyframes cardPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+#current-word {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+/* Speak Button */
+.speak-btn {
+    background: linear-gradient(135deg, #26A69A 0%, #00897B 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-small);
+}
+
+.speak-btn:active {
+    transform: scale(0.95);
+}
+
+.speak-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Picture Display */
+.picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px;
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+    border-radius: 20px;
+    box-shadow: var(--shadow-small);
+    min-width: 200px;
+}
+
+#picture-display {
+    font-size: 5rem;
+    line-height: 1;
+}
+
+.picture-label {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Spelling Input */
+.spelling-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.spelling-input {
+    width: 100%;
+    padding: 15px 20px;
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    border: 3px solid #ddd;
+    border-radius: 15px;
+    background: white;
+    color: var(--text-dark);
+    transition: all 0.2s ease;
+    letter-spacing: 3px;
+    text-transform: lowercase;
+}
+
+.spelling-input:focus {
+    outline: none;
+    border-color: var(--primary-purple);
+    box-shadow: 0 0 0 4px rgba(156, 39, 176, 0.2);
+}
+
+.spelling-input.correct {
+    border-color: var(--primary-green);
+    background: #E8F5E9;
+}
+
+.spelling-input.incorrect {
+    border-color: #E57373;
+    background: #FFEBEE;
+}
+
+.submit-spelling-btn {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, #7B1FA2 100%);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submit-spelling-btn:active {
+    transform: scale(0.95);
+}
+
+/* Reading Answer Buttons */
+.reading-answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.reading-answer-btn {
+    padding: 18px 15px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    color: var(--text-dark);
+    box-shadow: var(--shadow-small);
+}
+
+.reading-answer-btn:active {
+    transform: scale(0.95);
+}
+
+.reading-answer-btn.correct {
+    background: linear-gradient(135deg, #81C784 0%, #66BB6A 100%);
+    color: white;
+    animation: correctPulse 0.5s ease;
+}
+
+.reading-answer-btn.incorrect {
+    background: linear-gradient(135deg, #EF9A9A 0%, #E57373 100%);
+    color: white;
+    animation: shake 0.5s ease;
+}
+
+.reading-answer-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Speed Reading Timer */
+.speed-timer {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #E91E63 0%, #C2185B 100%);
+    color: white;
+    border-radius: 25px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.speed-timer.active {
+    display: flex;
+}
+
+.speed-timer.warning {
+    animation: timerPulse 0.5s ease infinite;
+}
+
+/* Reading Mode Labels */
+.reading-mode-title {
+    color: var(--text-dark);
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 5px 15px;
+    background: rgba(38, 166, 154, 0.1);
+    border-radius: 10px;
+}
+
+/* Reading Menu Buttons */
+.sight-words-btn {
+    background: linear-gradient(135deg, #26A69A 0%, #00897B 100%);
+    color: white;
+}
+
+.word-picture-btn {
+    background: linear-gradient(135deg, #FF7043 0%, #F4511E 100%);
+    color: white;
+}
+
+.spelling-btn {
+    background: linear-gradient(135deg, #AB47BC 0%, #8E24AA 100%);
+    color: white;
+}
+
+.speed-reading-btn {
+    background: linear-gradient(135deg, #EC407A 0%, #D81B60 100%);
+    color: white;
+}
+
+/* Reading Level Selector */
+.reading-level-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px 15px;
+    background: linear-gradient(135deg, #E0F2F1 0%, #B2DFDB 100%);
+    border-radius: 15px;
+}
+
+.reading-level-btn.active {
+    background: linear-gradient(135deg, #26A69A 0%, #00897B 100%);
+    color: white;
+    border-color: #00897B;
+}
+
+/* Hint Display */
+.hint-display {
+    display: none;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+    border-radius: 10px;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.hint-display.show {
+    display: block;
+}
+
+/* Word Result Display */
+.word-result {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+.word-result.show {
+    display: flex;
+}
+
+.word-result.correct {
+    background: linear-gradient(135deg, #C8E6C9 0%, #A5D6A7 100%);
+    color: #2E7D32;
+}
+
+.word-result.incorrect {
+    background: linear-gradient(135deg, #FFCDD2 0%, #EF9A9A 100%);
+    color: #C62828;
+}
+
+.correct-word {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+/* ================================================
+   READING GAME RESPONSIVE
+   ================================================ */
+@media (max-width: 500px) {
+    #current-word {
+        font-size: 2.8rem;
+    }
+
+    .word-card {
+        padding: 25px 30px;
+        min-width: 200px;
+    }
+
+    #picture-display {
+        font-size: 4rem;
+    }
+
+    .spelling-input {
+        font-size: 1.5rem;
+        padding: 12px 15px;
+    }
+
+    .reading-answer-btn {
+        padding: 15px 12px;
+        font-size: 1.1rem;
+    }
+
+    .place-value-display {
+        gap: 15px;
+    }
+
+    .ten-block-unit {
+        width: 10px;
+        height: 10px;
+    }
+
+    .one-block {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+@media (max-height: 700px) {
+    .word-card {
+        padding: 20px 25px;
+        min-height: 120px;
+    }
+
+    #current-word {
+        font-size: 2.5rem;
+    }
+
+    .picture-container {
+        padding: 15px;
+    }
+
+    #picture-display {
+        font-size: 3.5rem;
+    }
+
+    .reading-game-area {
+        gap: 10px;
+    }
+}
+
+/* Large screens */
+@media (min-width: 768px) and (min-height: 900px) {
+    #current-word {
+        font-size: 4.5rem;
+    }
+
+    .word-card {
+        padding: 40px 60px;
+        min-width: 300px;
+    }
+
+    #picture-display {
+        font-size: 6rem;
+    }
+
+    .spelling-input {
+        font-size: 2.5rem;
+    }
+
+    .reading-answer-btn {
+        padding: 22px 20px;
+        font-size: 1.5rem;
+    }
+
+    .place-value-number {
+        font-size: 2.5rem;
+    }
+
+    .ten-block-unit {
+        width: 14px;
+        height: 14px;
+    }
+
+    .one-block {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+/* ================================================
+   PLACE VALUE BLOCKS (Tens and Ones)
+   ================================================ */
+.pv-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.pv-blocks {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 60px;
+    align-items: flex-end;
+}
+
+.pv-block {
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.pv-block.tens-block {
+    width: 12px;
+    height: 60px;
+    background: linear-gradient(135deg, #4A90D9 0%, #357ABD 100%);
+}
+
+.pv-block.ones-block {
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #F5A623 0%, #E09100 100%);
+}
+
+.pv-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-light);
+    text-transform: uppercase;
+}
+
+/* ================================================
+   GUIDE TABS
+   ================================================ */
+.guide-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.guide-tab {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #e9ecef;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-dark);
+}
+
+.guide-tab.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.guide-tab:active {
+    transform: scale(0.98);
+}
+
+.guide-tab-content {
+    display: none;
+}
+
+.guide-tab-content.active {
+    display: block;
+}
+
+/* Level Reference in Guide */
+.levels-reference {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.levels-reference .level-ref {
+    padding: 10px 15px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+}
+
+.guide-section.reference .levels-reference .level-ref {
+    background: rgba(255,255,255,0.95);
+}
+
+/* ================================================
+   DASHBOARD TABS
+   ================================================ */
+.dashboard-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.dash-tab {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    background: #e9ecef;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-dark);
+}
+
+.dash-tab.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.dash-tab:active {
+    transform: scale(0.98);
+}
+
+/* Reading Accuracy Bars */
+.accuracy-bar.reading-bar {
+    background: linear-gradient(90deg, #26A69A 0%, #00897B 100%);
+}
+
+/* Reading Answer Buttons Variants */
+.reading-answer-btn.big-btn {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #26A69A 0%, #00897B 100%);
+    color: white;
+    font-size: 1.4rem;
+    padding: 20px;
+}
+
+.reading-answer-btn.skip-btn {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #E0E0E0 0%, #BDBDBD 100%);
+    color: var(--text-dark);
+    font-size: 1rem;
+    padding: 12px;
+}
+
+/* Word Match Button */
+.word-match-btn {
+    background: linear-gradient(135deg, #FF7043 0%, #F4511E 100%);
+    color: white;
+}
+
+/* Reading timer button */
+.reading-timer-btn {
+    background: linear-gradient(135deg, #EC407A 0%, #D81B60 100%);
+    color: white;
+}
+
+/* Sentence button */
+.sentence-btn {
+    background: linear-gradient(135deg, #7E57C2 0%, #5E35B1 100%);
+    color: white;
+}
+
+/* Word display container */
+.word-display-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Reading Answers Container */
+.reading-answers-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 350px;
+}
+
+/* Place Value Container Responsive */
+@media (max-width: 500px) {
+    .pv-block.tens-block {
+        width: 10px;
+        height: 50px;
+    }
+
+    .pv-block.ones-block {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+@media (min-width: 768px) and (min-height: 900px) {
+    .pv-block.tens-block {
+        width: 14px;
+        height: 70px;
+    }
+
+    .pv-block.ones-block {
+        width: 24px;
+        height: 24px;
     }
 }

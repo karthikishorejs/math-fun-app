@@ -89,7 +89,7 @@ global.window = { AudioContext: MockAudioContext };
 global.AudioContext = MockAudioContext;
 
 // Import the modules (simulated since we're testing the logic)
-const { DIFFICULTY_SETTINGS } = require('../app.js');
+const { DIFFICULTY_SETTINGS, MATH_LEVEL_SETTINGS } = require('../app.js');
 
 // ============================================
 // Test Suite: Difficulty Settings
@@ -103,27 +103,37 @@ describe('Difficulty Settings', () => {
         expect(DIFFICULTY_SETTINGS).toHaveProperty('hard');
     });
 
-    test('easy mode should have smaller numbers', () => {
+    test('easy mode should have 3 answer choices', () => {
         const easy = DIFFICULTY_SETTINGS.easy;
-        expect(easy.bonds.maxNum).toBe(5);
-        expect(easy.addition.maxSum).toBe(10);
-        expect(easy.subtraction.maxSubtract).toBe(5);
         expect(easy.answerChoices).toBe(3);
     });
 
-    test('medium mode should have medium numbers', () => {
+    test('medium mode should have 4 answer choices', () => {
         const medium = DIFFICULTY_SETTINGS.medium;
-        expect(medium.bonds.maxNum).toBe(10);
-        expect(medium.addition.maxSum).toBe(15);
-        expect(medium.subtraction.maxSubtract).toBe(10);
         expect(medium.answerChoices).toBe(4);
     });
 
-    test('hard mode should have larger numbers and more choices', () => {
+    test('hard mode should have 5 answer choices', () => {
         const hard = DIFFICULTY_SETTINGS.hard;
-        expect(hard.bonds.maxNum).toBe(10);
-        expect(hard.addition.maxSum).toBe(20);
         expect(hard.answerChoices).toBe(5);
+    });
+
+    test('math level 1 should have numbers to 20', () => {
+        const level1 = MATH_LEVEL_SETTINGS[1];
+        expect(level1.maxNumber).toBe(20);
+        expect(level1.addition.maxSum).toBe(20);
+    });
+
+    test('math level 2 should have numbers to 50', () => {
+        const level2 = MATH_LEVEL_SETTINGS[2];
+        expect(level2.maxNumber).toBe(50);
+        expect(level2.addition.maxSum).toBe(50);
+    });
+
+    test('math level 3 should have numbers to 100', () => {
+        const level3 = MATH_LEVEL_SETTINGS[3];
+        expect(level3.maxNumber).toBe(100);
+        expect(level3.addition.maxSum).toBe(99);
     });
 
     test('timer should decrease with difficulty', () => {
@@ -167,15 +177,16 @@ describe('Problem Generation Logic', () => {
     });
 
     describe('Addition Problems', () => {
-        test('sum should not exceed maxSum for easy difficulty', () => {
-            const maxSum = DIFFICULTY_SETTINGS.easy.addition.maxSum;
-            const maxNum1 = DIFFICULTY_SETTINGS.easy.addition.maxNum1;
+        test('sum should not exceed maxSum for level 1', () => {
+            const levelSettings = MATH_LEVEL_SETTINGS[1];
+            const maxSum = levelSettings.addition.maxSum;
+            const maxNum1 = levelSettings.addition.maxNum1;
 
             // Simulate generating problems
             for (let i = 0; i < 100; i++) {
                 const num1 = Math.floor(Math.random() * maxNum1) + 1;
                 const maxNum2 = Math.min(maxNum1, maxSum - num1);
-                const num2 = Math.floor(Math.random() * maxNum2) + 1;
+                const num2 = Math.floor(Math.random() * Math.max(1, maxNum2)) + 1;
                 const answer = num1 + num2;
 
                 expect(answer).toBeLessThanOrEqual(maxSum);
@@ -184,14 +195,15 @@ describe('Problem Generation Logic', () => {
             }
         });
 
-        test('sum should not exceed maxSum for hard difficulty', () => {
-            const maxSum = DIFFICULTY_SETTINGS.hard.addition.maxSum;
-            const maxNum1 = DIFFICULTY_SETTINGS.hard.addition.maxNum1;
+        test('sum should not exceed maxSum for level 3', () => {
+            const levelSettings = MATH_LEVEL_SETTINGS[3];
+            const maxSum = levelSettings.addition.maxSum;
+            const maxNum1 = levelSettings.addition.maxNum1;
 
             for (let i = 0; i < 100; i++) {
                 const num1 = Math.floor(Math.random() * maxNum1) + 1;
                 const maxNum2 = Math.min(maxNum1, maxSum - num1);
-                const num2 = Math.floor(Math.random() * maxNum2) + 1;
+                const num2 = Math.floor(Math.random() * Math.max(1, maxNum2)) + 1;
                 const answer = num1 + num2;
 
                 expect(answer).toBeLessThanOrEqual(maxSum);
@@ -208,8 +220,9 @@ describe('Problem Generation Logic', () => {
             }
         });
 
-        test('subtraction should respect maxSubtract setting', () => {
-            const maxSubtract = DIFFICULTY_SETTINGS.easy.subtraction.maxSubtract;
+        test('subtraction should respect maxSubtract setting for level 1', () => {
+            const levelSettings = MATH_LEVEL_SETTINGS[1];
+            const maxSubtract = levelSettings.subtraction.maxSubtract;
 
             for (let i = 0; i < 100; i++) {
                 const num2 = Math.floor(Math.random() * maxSubtract) + 1;
@@ -622,15 +635,17 @@ describe('Integration Tests', () => {
         expect(stats.trophies).toContain('streak_10');
     });
 
-    test('difficulty change should affect problem generation', () => {
-        const easyMax = DIFFICULTY_SETTINGS.easy.bonds.maxNum;
-        const hardMax = DIFFICULTY_SETTINGS.hard.bonds.maxNum;
-
-        // Easy mode generates smaller numbers
-        expect(easyMax).toBeLessThan(hardMax);
-
+    test('difficulty change should affect answer choices', () => {
         // Hard mode has more answer choices
         expect(DIFFICULTY_SETTINGS.easy.answerChoices).toBeLessThan(DIFFICULTY_SETTINGS.hard.answerChoices);
+    });
+
+    test('level progression should increase number ranges', () => {
+        // Level 3 has higher maxNumber than Level 1
+        expect(MATH_LEVEL_SETTINGS[1].maxNumber).toBeLessThan(MATH_LEVEL_SETTINGS[3].maxNumber);
+        // Level 2 is in between
+        expect(MATH_LEVEL_SETTINGS[2].maxNumber).toBeGreaterThan(MATH_LEVEL_SETTINGS[1].maxNumber);
+        expect(MATH_LEVEL_SETTINGS[2].maxNumber).toBeLessThan(MATH_LEVEL_SETTINGS[3].maxNumber);
     });
 });
 
