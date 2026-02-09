@@ -1243,7 +1243,7 @@ class LearnFunApp {
         this.showStoryScene();
     }
 
-    async generateAIStory(apiKey) {
+    async generateAIStory(apiKey, retryCount = 0) {
         const theme = STORY_THEMES[Math.floor(Math.random() * STORY_THEMES.length)];
 
         const prompt = `<s>[INST] Create a short interactive children's story about ${theme} for a 6-7 year old.
@@ -1269,6 +1269,8 @@ Rules:
 [/INST]</s>`;
 
         try {
+            console.log('Generating AI story with theme:', theme);
+
             const response = await fetch('https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1', {
                 method: 'POST',
                 headers: {
@@ -1285,12 +1287,22 @@ Rules:
                 })
             });
 
-            if (!response.ok) {
-                console.error('API response not ok:', response.status);
-                return null;
+            const result = await response.json();
+            console.log('API response:', result);
+
+            // Handle model loading (cold start) - retry after waiting
+            if (result.error && result.error.includes('loading') && retryCount < 2) {
+                const waitTime = result.estimated_time ? Math.ceil(result.estimated_time * 1000) : 20000;
+                console.log(`Model is loading, waiting ${waitTime}ms and retrying...`);
+                document.querySelector('.loading-text').textContent = '⏳ Waking up the AI... please wait';
+                await new Promise(resolve => setTimeout(resolve, waitTime));
+                return this.generateAIStory(apiKey, retryCount + 1);
             }
 
-            const result = await response.json();
+            if (!response.ok) {
+                console.error('API response not ok:', response.status, result);
+                return null;
+            }
 
             // Handle different response formats
             let generatedText = '';
@@ -1303,6 +1315,8 @@ Rules:
                 return null;
             }
 
+            console.log('Generated text:', generatedText);
+
             // Extract JSON from the response
             const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
             if (!jsonMatch) {
@@ -1311,6 +1325,7 @@ Rules:
             }
 
             const story = JSON.parse(jsonMatch[0]);
+            console.log('Parsed story:', story);
 
             // Validate the story structure
             if (!story.title || !Array.isArray(story.scenes) || story.scenes.length < 2) {
