@@ -179,6 +179,11 @@
                     <label>Sound:</label>
                     <button class="sound-toggle reading-sound-toggle" id="reading-sound-toggle">🔊 On</button>
                 </div>
+                <div class="setting-row ai-setting">
+                    <label>🤖 AI Stories:</label>
+                    <input type="password" class="api-key-input" id="hf-api-key" placeholder="Hugging Face API key (optional)">
+                    <small class="api-hint">Free at <a href="https://huggingface.co/settings/tokens" target="_blank">huggingface.co</a></small>
+                </div>
             </div>
         </section>
 
@@ -466,6 +471,12 @@
 
             <div class="game-area reading-game-area">
                 <h2 id="reading-mode-title" class="mode-title">Reading</h2>
+
+                <!-- Story Loading State -->
+                <div class="story-loading" id="story-loading" style="display: none;">
+                    <div class="loading-spinner"></div>
+                    <p class="loading-text">✨ Creating your story...</p>
+                </div>
 
                 <!-- Story Container (for story mode) -->
                 <div class="story-container" id="story-container" style="display: none;">

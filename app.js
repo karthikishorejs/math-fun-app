@@ -208,7 +208,8 @@ const READING_PASSAGES = [
 ];
 
 // Interactive Story Adventures
-const STORY_ADVENTURES = [
+// Fallback stories used when AI generation is unavailable
+const FALLBACK_STORIES = [
     {
         id: 'dragon',
         title: 'The Friendly Dragon',
@@ -364,6 +365,20 @@ const SPELLING_WORDS = {
     medium: ['knowledge', 'adventure', 'mysterious', 'wonderful', 'celebrate', 'important', 'excellent', 'disappear', 'impossible', 'comfortable'],
     hard: ['extraordinary', 'immediately', 'unfortunately', 'encyclopedia', 'accomplishment', 'determination', 'imagination', 'communication', 'environment', 'responsibility']
 };
+
+// AI Story generation themes
+const STORY_THEMES = [
+    'a magical garden with talking flowers',
+    'a friendly robot learning about feelings',
+    'a brave little mouse on a big adventure',
+    'a rainbow that lost its colors',
+    'a cloud that wanted to become rain',
+    'a lost star finding its way home',
+    'a kind wizard helping forest animals',
+    'a musical instrument that came to life',
+    'a treehouse that could fly',
+    'a penguin who dreamed of warm places'
+];
 
 class LearnFunApp {
     constructor() {
@@ -530,6 +545,14 @@ class LearnFunApp {
             this.spellingDifficulty = settings.spellingDifficulty || 'easy';
             this.sound.enabled = settings.soundEnabled !== false;
         }
+
+        // Load HF API key separately (for security, kept in different key)
+        const hfApiKey = localStorage.getItem('hfApiKey') || '';
+        const apiKeyInput = document.getElementById('hf-api-key');
+        if (apiKeyInput) {
+            apiKeyInput.value = hfApiKey;
+        }
+
         this.updateSettingsUI();
     }
 
@@ -540,6 +563,10 @@ class LearnFunApp {
             spellingDifficulty: this.spellingDifficulty,
             soundEnabled: this.sound.enabled
         }));
+    }
+
+    saveHfApiKey(key) {
+        localStorage.setItem('hfApiKey', key);
     }
 
     updateSettingsUI() {
@@ -618,6 +645,11 @@ class LearnFunApp {
                 btn.classList.add('active');
                 this.saveSettings();
             });
+        });
+
+        // Hugging Face API key input
+        document.getElementById('hf-api-key')?.addEventListener('change', (e) => {
+            this.saveHfApiKey(e.target.value.trim());
         });
 
         // Math menu buttons
@@ -1165,18 +1197,140 @@ class LearnFunApp {
 
     // ==================== STORY MODE ====================
 
-    startStoryMode() {
+    async startStoryMode() {
         const storyContainer = document.getElementById('story-container');
-        storyContainer.style.display = 'block';
+        const loadingContainer = document.getElementById('story-loading');
         document.getElementById('reading-progress-container').style.display = 'none';
 
-        // Pick a random story
-        this.currentStory = STORY_ADVENTURES[Math.floor(Math.random() * STORY_ADVENTURES.length)];
+        // Check if AI generation is available
+        const apiKey = localStorage.getItem('hfApiKey');
+
+        if (apiKey) {
+            // Show loading state while generating AI story
+            loadingContainer.style.display = 'flex';
+            storyContainer.style.display = 'none';
+
+            try {
+                const aiStory = await this.generateAIStory(apiKey);
+                if (aiStory) {
+                    this.currentStory = aiStory;
+                    this.isAIStory = true;
+                } else {
+                    // Fall back to hardcoded stories
+                    this.currentStory = FALLBACK_STORIES[Math.floor(Math.random() * FALLBACK_STORIES.length)];
+                    this.isAIStory = false;
+                }
+            } catch (error) {
+                console.error('AI story generation failed:', error);
+                this.currentStory = FALLBACK_STORIES[Math.floor(Math.random() * FALLBACK_STORIES.length)];
+                this.isAIStory = false;
+            }
+
+            loadingContainer.style.display = 'none';
+        } else {
+            // No API key, use fallback stories directly
+            this.currentStory = FALLBACK_STORIES[Math.floor(Math.random() * FALLBACK_STORIES.length)];
+            this.isAIStory = false;
+        }
+
+        storyContainer.style.display = 'block';
         this.currentSceneIndex = 0;
         this.totalProblems = 1; // Stories count as 1 complete activity
 
-        document.getElementById('story-title').textContent = this.currentStory.title;
+        // Show title with AI badge if applicable
+        const titleEl = document.getElementById('story-title');
+        titleEl.innerHTML = this.currentStory.title + (this.isAIStory ? '<span class="ai-badge">AI</span>' : '');
         this.showStoryScene();
+    }
+
+    async generateAIStory(apiKey) {
+        const theme = STORY_THEMES[Math.floor(Math.random() * STORY_THEMES.length)];
+
+        const prompt = `<s>[INST] Create a short interactive children's story about ${theme} for a 6-7 year old.
+
+Return ONLY valid JSON with this exact structure (no other text):
+{
+    "title": "Story Title Here",
+    "scenes": [
+        {"text": "Opening scene text here...", "choices": [{"text": "First choice", "next": 1}, {"text": "Second choice", "next": 2}]},
+        {"text": "Scene after first choice...", "choices": [{"text": "Next choice", "next": 3}]},
+        {"text": "Scene after second choice...", "choices": [{"text": "Next choice", "next": 3}]},
+        {"text": "Final happy ending scene...", "ending": true, "message": "🎉 Congratulations message here!"}
+    ]
+}
+
+Rules:
+- Keep text short and simple (2-3 sentences per scene)
+- Use positive, encouraging themes
+- Include 4-5 scenes total
+- All paths should lead to a happy ending
+- Use "next" to indicate which scene index comes next (0-indexed)
+- The last scene must have "ending": true and a "message"
+[/INST]</s>`;
+
+        try {
+            const response = await fetch('https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    inputs: prompt,
+                    parameters: {
+                        max_new_tokens: 1200,
+                        return_full_text: false,
+                        temperature: 0.7
+                    }
+                })
+            });
+
+            if (!response.ok) {
+                console.error('API response not ok:', response.status);
+                return null;
+            }
+
+            const result = await response.json();
+
+            // Handle different response formats
+            let generatedText = '';
+            if (Array.isArray(result) && result[0]?.generated_text) {
+                generatedText = result[0].generated_text;
+            } else if (result.generated_text) {
+                generatedText = result.generated_text;
+            } else if (result.error) {
+                console.error('API error:', result.error);
+                return null;
+            }
+
+            // Extract JSON from the response
+            const jsonMatch = generatedText.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) {
+                console.error('No JSON found in response');
+                return null;
+            }
+
+            const story = JSON.parse(jsonMatch[0]);
+
+            // Validate the story structure
+            if (!story.title || !Array.isArray(story.scenes) || story.scenes.length < 2) {
+                console.error('Invalid story structure');
+                return null;
+            }
+
+            // Ensure there's at least one ending scene
+            const hasEnding = story.scenes.some(scene => scene.ending);
+            if (!hasEnding) {
+                // Add a default ending to the last scene
+                story.scenes[story.scenes.length - 1].ending = true;
+                story.scenes[story.scenes.length - 1].message = '🎉 The End! What a wonderful adventure!';
+            }
+
+            return story;
+        } catch (error) {
+            console.error('Error generating AI story:', error);
+            return null;
+        }
     }
 
     showStoryScene() {
