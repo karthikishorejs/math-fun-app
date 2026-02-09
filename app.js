@@ -1246,44 +1246,41 @@ class LearnFunApp {
     async generateAIStory(apiKey, retryCount = 0) {
         const theme = STORY_THEMES[Math.floor(Math.random() * STORY_THEMES.length)];
 
-        const prompt = `<s>[INST] Create a short interactive children's story about ${theme} for a 6-7 year old.
+        const systemPrompt = `You are a children's story generator. Create short, interactive stories for 6-7 year olds. Always respond with ONLY valid JSON, no other text.`;
 
-Return ONLY valid JSON with this exact structure (no other text):
+        const userPrompt = `Create a short interactive children's story about ${theme}.
+
+Return ONLY valid JSON with this exact structure:
 {
     "title": "Story Title Here",
     "scenes": [
-        {"text": "Opening scene text here...", "choices": [{"text": "First choice", "next": 1}, {"text": "Second choice", "next": 2}]},
+        {"text": "Opening scene (2-3 sentences)...", "choices": [{"text": "First choice", "next": 1}, {"text": "Second choice", "next": 2}]},
         {"text": "Scene after first choice...", "choices": [{"text": "Next choice", "next": 3}]},
         {"text": "Scene after second choice...", "choices": [{"text": "Next choice", "next": 3}]},
-        {"text": "Final happy ending scene...", "ending": true, "message": "🎉 Congratulations message here!"}
+        {"text": "Happy ending scene...", "ending": true, "message": "🎉 Congratulations!"}
     ]
 }
 
-Rules:
-- Keep text short and simple (2-3 sentences per scene)
-- Use positive, encouraging themes
-- Include 4-5 scenes total
-- All paths should lead to a happy ending
-- Use "next" to indicate which scene index comes next (0-indexed)
-- The last scene must have "ending": true and a "message"
-[/INST]</s>`;
+Rules: 4-5 short scenes, positive themes, all paths lead to happy ending, "next" is 0-indexed scene number.`;
 
         try {
             console.log('Generating AI story with theme:', theme);
 
-            const response = await fetch('https://api-inference.huggingface.co/models/mistralai/Mixtral-8x7B-Instruct-v0.1', {
+            // Use the OpenAI-compatible endpoint which supports CORS
+            const response = await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3/v1/chat/completions', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    inputs: prompt,
-                    parameters: {
-                        max_new_tokens: 1200,
-                        return_full_text: false,
-                        temperature: 0.7
-                    }
+                    model: 'mistralai/Mistral-7B-Instruct-v0.3',
+                    messages: [
+                        { role: 'system', content: systemPrompt },
+                        { role: 'user', content: userPrompt }
+                    ],
+                    max_tokens: 1000,
+                    temperature: 0.7
                 })
             });
 
@@ -1291,8 +1288,8 @@ Rules:
             console.log('API response:', result);
 
             // Handle model loading (cold start) - retry after waiting
-            if (result.error && result.error.includes('loading') && retryCount < 2) {
-                const waitTime = result.estimated_time ? Math.ceil(result.estimated_time * 1000) : 20000;
+            if (result.error && (result.error.includes('loading') || result.error.includes('currently loading')) && retryCount < 2) {
+                const waitTime = result.estimated_time ? Math.ceil(result.estimated_time * 1000) : 30000;
                 console.log(`Model is loading, waiting ${waitTime}ms and retrying...`);
                 document.querySelector('.loading-text').textContent = '⏳ Waking up the AI... please wait';
                 await new Promise(resolve => setTimeout(resolve, waitTime));
@@ -1304,12 +1301,10 @@ Rules:
                 return null;
             }
 
-            // Handle different response formats
+            // Extract the generated text from chat completion format
             let generatedText = '';
-            if (Array.isArray(result) && result[0]?.generated_text) {
-                generatedText = result[0].generated_text;
-            } else if (result.generated_text) {
-                generatedText = result.generated_text;
+            if (result.choices && result.choices[0]?.message?.content) {
+                generatedText = result.choices[0].message.content;
             } else if (result.error) {
                 console.error('API error:', result.error);
                 return null;
