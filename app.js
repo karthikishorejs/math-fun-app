@@ -546,11 +546,11 @@ class LearnFunApp {
             this.sound.enabled = settings.soundEnabled !== false;
         }
 
-        // Load HF API key separately (for security, kept in different key)
-        const hfApiKey = localStorage.getItem('hfApiKey') || '';
-        const apiKeyInput = document.getElementById('hf-api-key');
+        // Load Anthropic API key separately (for security, kept in different key)
+        const anthropicApiKey = localStorage.getItem('anthropicApiKey') || '';
+        const apiKeyInput = document.getElementById('anthropic-api-key');
         if (apiKeyInput) {
-            apiKeyInput.value = hfApiKey;
+            apiKeyInput.value = anthropicApiKey;
         }
 
         this.updateSettingsUI();
@@ -565,8 +565,8 @@ class LearnFunApp {
         }));
     }
 
-    saveHfApiKey(key) {
-        localStorage.setItem('hfApiKey', key);
+    saveAnthropicApiKey(key) {
+        localStorage.setItem('anthropicApiKey', key);
     }
 
     updateSettingsUI() {
@@ -647,9 +647,9 @@ class LearnFunApp {
             });
         });
 
-        // Hugging Face API key input
-        document.getElementById('hf-api-key')?.addEventListener('change', (e) => {
-            this.saveHfApiKey(e.target.value.trim());
+        // Anthropic API key input
+        document.getElementById('anthropic-api-key')?.addEventListener('change', (e) => {
+            this.saveAnthropicApiKey(e.target.value.trim());
         });
 
         // Math menu buttons
@@ -1202,8 +1202,8 @@ class LearnFunApp {
         const loadingContainer = document.getElementById('story-loading');
         document.getElementById('reading-progress-container').style.display = 'none';
 
-        // Check if AI generation is available
-        const apiKey = localStorage.getItem('hfApiKey');
+        // Check if AI generation is available (Anthropic API key)
+        const apiKey = localStorage.getItem('anthropicApiKey');
 
         if (apiKey) {
             // Show loading state while generating AI story
@@ -1243,7 +1243,7 @@ class LearnFunApp {
         this.showStoryScene();
     }
 
-    async generateAIStory(apiKey, retryCount = 0) {
+    async generateAIStory(apiKey) {
         const theme = STORY_THEMES[Math.floor(Math.random() * STORY_THEMES.length)];
 
         const systemPrompt = `You are a children's story generator. Create short, interactive stories for 6-7 year olds. Always respond with ONLY valid JSON, no other text.`;
@@ -1266,47 +1266,37 @@ Rules: 4-5 short scenes, positive themes, all paths lead to happy ending, "next"
         try {
             console.log('Generating AI story with theme:', theme);
 
-            // Use the OpenAI-compatible endpoint which supports CORS
-            const response = await fetch('https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3/v1/chat/completions', {
+            // Use Anthropic Claude API with CORS support
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
                 },
                 body: JSON.stringify({
-                    model: 'mistralai/Mistral-7B-Instruct-v0.3',
-                    messages: [
-                        { role: 'system', content: systemPrompt },
-                        { role: 'user', content: userPrompt }
-                    ],
-                    max_tokens: 1000,
-                    temperature: 0.7
+                    model: 'claude-3-haiku-20240307',
+                    max_tokens: 1024,
+                    system: systemPrompt,
+                    messages: [{ role: 'user', content: userPrompt }]
                 })
             });
 
             const result = await response.json();
             console.log('API response:', result);
 
-            // Handle model loading (cold start) - retry after waiting
-            if (result.error && (result.error.includes('loading') || result.error.includes('currently loading')) && retryCount < 2) {
-                const waitTime = result.estimated_time ? Math.ceil(result.estimated_time * 1000) : 30000;
-                console.log(`Model is loading, waiting ${waitTime}ms and retrying...`);
-                document.querySelector('.loading-text').textContent = '⏳ Waking up the AI... please wait';
-                await new Promise(resolve => setTimeout(resolve, waitTime));
-                return this.generateAIStory(apiKey, retryCount + 1);
-            }
-
-            if (!response.ok) {
-                console.error('API response not ok:', response.status, result);
+            if (!response.ok || result.error) {
+                console.error('API error:', result.error || response.status);
                 return null;
             }
 
-            // Extract the generated text from chat completion format
+            // Extract the generated text from Anthropic response format
             let generatedText = '';
-            if (result.choices && result.choices[0]?.message?.content) {
-                generatedText = result.choices[0].message.content;
-            } else if (result.error) {
-                console.error('API error:', result.error);
+            if (result.content && result.content[0]?.text) {
+                generatedText = result.content[0].text;
+            } else {
+                console.error('Unexpected response format:', result);
                 return null;
             }
 
