@@ -2337,3 +2337,307 @@ body {
         height: 24px;
     }
 }
+
+/* ================================================
+   STORY MODE STYLES
+   ================================================ */
+.story-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 500px;
+    padding: 15px;
+}
+
+.story-title {
+    color: var(--primary-purple);
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.story-text {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFECB3 100%);
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-dark);
+    box-shadow: var(--shadow-small);
+}
+
+.story-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.story-choice-btn {
+    padding: 15px 20px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    color: var(--text-dark);
+    text-align: left;
+    box-shadow: var(--shadow-small);
+}
+
+.story-choice-btn:hover {
+    transform: translateX(5px);
+}
+
+.story-choice-btn:active {
+    transform: scale(0.98);
+}
+
+.story-choice-btn.ending-btn {
+    background: linear-gradient(135deg, var(--primary-green) 0%, #449D44 100%);
+    color: white;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.story-ending {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.ending-message {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #2E7D32;
+}
+
+/* Story button menu */
+.story-btn {
+    background: linear-gradient(135deg, #FF7043 0%, #F4511E 100%);
+    color: white;
+}
+
+/* ================================================
+   VOCABULARY MODE STYLES
+   ================================================ */
+.vocab-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 450px;
+    padding: 15px;
+}
+
+.vocab-word {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--primary-purple);
+    text-align: center;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #F3E5F5 0%, #E1BEE7 100%);
+    border-radius: 15px;
+}
+
+.vocab-definition {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-style: italic;
+    text-align: center;
+    padding: 10px;
+}
+
+.vocab-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-align: center;
+    padding: 10px;
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.vocab-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.vocab-choice-btn {
+    padding: 15px 20px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%);
+    color: var(--text-dark);
+    box-shadow: var(--shadow-small);
+}
+
+.vocab-choice-btn:active {
+    transform: scale(0.98);
+}
+
+.vocab-choice-btn.correct {
+    background: linear-gradient(135deg, #81C784 0%, #66BB6A 100%);
+    color: white;
+}
+
+.vocab-choice-btn.incorrect {
+    background: linear-gradient(135deg, #EF9A9A 0%, #E57373 100%);
+    color: white;
+}
+
+.vocab-choice-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Vocab button menu */
+.vocab-btn {
+    background: linear-gradient(135deg, #7E57C2 0%, #5E35B1 100%);
+    color: white;
+}
+
+/* ================================================
+   COMPREHENSION MODE STYLES
+   ================================================ */
+.comprehension-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 500px;
+    padding: 10px;
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+}
+
+.passage-title {
+    color: var(--primary-blue);
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+.passage-text {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-dark);
+    box-shadow: var(--shadow-small);
+    border-left: 4px solid var(--primary-blue);
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.comprehension-question {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    padding: 12px;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 100%);
+    border-radius: 10px;
+}
+
+.comprehension-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.comprehension-choice-btn {
+    padding: 12px 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: var(--text-dark);
+    text-align: left;
+    box-shadow: var(--shadow-small);
+}
+
+.comprehension-choice-btn:active {
+    transform: scale(0.98);
+}
+
+.comprehension-choice-btn.correct {
+    background: linear-gradient(135deg, #81C784 0%, #66BB6A 100%);
+    color: white;
+}
+
+.comprehension-choice-btn.incorrect {
+    background: linear-gradient(135deg, #EF9A9A 0%, #E57373 100%);
+    color: white;
+}
+
+.comprehension-choice-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Comprehension button menu */
+.comprehension-btn {
+    background: linear-gradient(135deg, #26A69A 0%, #00897B 100%);
+    color: white;
+}
+
+/* ================================================
+   UPDATED SPELLING STYLES
+   ================================================ */
+.big-speak {
+    font-size: 1.3rem;
+    padding: 20px 30px;
+    margin-bottom: 10px;
+}
+
+/* ================================================
+   RESPONSIVE ADJUSTMENTS FOR NEW MODES
+   ================================================ */
+@media (max-width: 500px) {
+    .story-text {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    .vocab-word {
+        font-size: 2rem;
+    }
+
+    .passage-text {
+        font-size: 0.95rem;
+        max-height: 150px;
+    }
+}
+
+@media (max-height: 700px) {
+    .story-container {
+        gap: 15px;
+    }
+
+    .vocab-container {
+        gap: 15px;
+    }
+
+    .comprehension-container {
+        max-height: calc(100vh - 200px);
+    }
+
+    .passage-text {
+        max-height: 120px;
+    }
+}

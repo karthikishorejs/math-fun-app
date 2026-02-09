@@ -139,51 +139,230 @@ const DIFFICULTY_SETTINGS = {
     }
 };
 
-// Sight Words by Level (Dolch + Fry combined)
-const SIGHT_WORDS = {
-    1: ['the', 'and', 'a', 'to', 'is', 'in', 'it', 'you', 'that', 'he', 'she', 'was', 'for', 'on', 'are', 'as', 'with', 'his', 'they', 'I', 'at', 'be', 'this', 'have', 'from'],
-    2: ['or', 'one', 'had', 'by', 'word', 'but', 'not', 'what', 'all', 'were', 'we', 'when', 'your', 'can', 'said', 'there', 'use', 'an', 'each', 'which', 'do', 'how', 'their', 'if', 'will'],
-    3: ['up', 'other', 'about', 'out', 'many', 'then', 'them', 'these', 'so', 'some', 'her', 'would', 'make', 'like', 'him', 'into', 'time', 'has', 'look', 'two', 'more', 'write', 'go', 'see', 'number']
-};
+// Vocabulary words with definitions, synonyms, antonyms
+const VOCABULARY_WORDS = [
+    { word: 'brave', definition: 'not afraid of danger', synonyms: ['courageous', 'bold', 'fearless'], antonyms: ['scared', 'afraid', 'cowardly'] },
+    { word: 'enormous', definition: 'very big', synonyms: ['huge', 'giant', 'massive'], antonyms: ['tiny', 'small', 'little'] },
+    { word: 'delicious', definition: 'tastes very good', synonyms: ['yummy', 'tasty', 'scrumptious'], antonyms: ['disgusting', 'gross', 'awful'] },
+    { word: 'ancient', definition: 'very very old', synonyms: ['old', 'antique', 'aged'], antonyms: ['new', 'modern', 'recent'] },
+    { word: 'swift', definition: 'moving very fast', synonyms: ['quick', 'fast', 'speedy'], antonyms: ['slow', 'sluggish', 'lazy'] },
+    { word: 'joyful', definition: 'feeling very happy', synonyms: ['happy', 'cheerful', 'glad'], antonyms: ['sad', 'unhappy', 'miserable'] },
+    { word: 'mysterious', definition: 'hard to understand or explain', synonyms: ['strange', 'puzzling', 'secret'], antonyms: ['clear', 'obvious', 'simple'] },
+    { word: 'brilliant', definition: 'very smart or very bright', synonyms: ['smart', 'clever', 'bright'], antonyms: ['dull', 'dim', 'stupid'] },
+    { word: 'fierce', definition: 'wild and scary', synonyms: ['wild', 'savage', 'violent'], antonyms: ['gentle', 'calm', 'peaceful'] },
+    { word: 'fragile', definition: 'breaks easily', synonyms: ['delicate', 'breakable', 'weak'], antonyms: ['strong', 'sturdy', 'tough'] },
+    { word: 'generous', definition: 'likes to share and give', synonyms: ['giving', 'kind', 'sharing'], antonyms: ['selfish', 'greedy', 'stingy'] },
+    { word: 'peculiar', definition: 'strange or unusual', synonyms: ['odd', 'weird', 'unusual'], antonyms: ['normal', 'ordinary', 'common'] },
+    { word: 'exhausted', definition: 'very very tired', synonyms: ['tired', 'weary', 'drained'], antonyms: ['energetic', 'rested', 'refreshed'] },
+    { word: 'magnificent', definition: 'extremely beautiful or impressive', synonyms: ['wonderful', 'splendid', 'grand'], antonyms: ['ugly', 'plain', 'ordinary'] },
+    { word: 'cautious', definition: 'being very careful', synonyms: ['careful', 'wary', 'watchful'], antonyms: ['careless', 'reckless', 'bold'] }
+];
 
-// Picture Words for matching (word + emoji)
-const PICTURE_WORDS = {
-    1: [
-        { word: 'cat', emoji: '🐱' },
-        { word: 'dog', emoji: '🐕' },
-        { word: 'sun', emoji: '☀️' },
-        { word: 'moon', emoji: '🌙' },
-        { word: 'star', emoji: '⭐' },
-        { word: 'fish', emoji: '🐟' },
-        { word: 'bird', emoji: '🐦' },
-        { word: 'tree', emoji: '🌳' },
-        { word: 'apple', emoji: '🍎' },
-        { word: 'ball', emoji: '⚽' }
-    ],
-    2: [
-        { word: 'house', emoji: '🏠' },
-        { word: 'car', emoji: '🚗' },
-        { word: 'book', emoji: '📕' },
-        { word: 'flower', emoji: '🌸' },
-        { word: 'rain', emoji: '🌧️' },
-        { word: 'snow', emoji: '❄️' },
-        { word: 'cake', emoji: '🎂' },
-        { word: 'baby', emoji: '👶' },
-        { word: 'hand', emoji: '✋' },
-        { word: 'heart', emoji: '❤️' }
-    ],
-    3: [
-        { word: 'rainbow', emoji: '🌈' },
-        { word: 'butterfly', emoji: '🦋' },
-        { word: 'elephant', emoji: '🐘' },
-        { word: 'airplane', emoji: '✈️' },
-        { word: 'rocket', emoji: '🚀' },
-        { word: 'dragon', emoji: '🐉' },
-        { word: 'unicorn', emoji: '🦄' },
-        { word: 'pizza', emoji: '🍕' },
-        { word: 'guitar', emoji: '🎸' },
-        { word: 'camera', emoji: '📷' }
-    ]
+// Reading Comprehension passages with questions
+const READING_PASSAGES = [
+    {
+        title: 'The Lost Puppy',
+        passage: 'One rainy afternoon, Maya found a small brown puppy shivering under a park bench. The puppy had no collar and looked very hungry. Maya took off her jacket and wrapped it around the puppy to keep it warm. She carried the puppy home and gave it some water and food. The next day, Maya made posters to find the puppy\'s owner.',
+        questions: [
+            { question: 'Where did Maya find the puppy?', choices: ['Under a tree', 'Under a park bench', 'In her backyard', 'At school'], answer: 1 },
+            { question: 'What did Maya use to keep the puppy warm?', choices: ['A blanket', 'Her jacket', 'A towel', 'Her hat'], answer: 1 },
+            { question: 'How did Maya try to find the owner?', choices: ['Called the police', 'Made posters', 'Asked her neighbors', 'Posted online'], answer: 1 }
+        ]
+    },
+    {
+        title: 'The Science Fair',
+        passage: 'Emma worked on her science project for three weeks. She wanted to find out if plants grow better with music. She planted four bean seeds in identical pots. Two pots listened to classical music every day, and two pots stayed in silence. After two weeks, the plants with music were taller! Emma was excited to share her results at the science fair.',
+        questions: [
+            { question: 'What was Emma trying to find out?', choices: ['If plants need water', 'If plants grow better with music', 'How to grow beans', 'What plants eat'], answer: 1 },
+            { question: 'How many pots did Emma use?', choices: ['Two', 'Three', 'Four', 'Five'], answer: 2 },
+            { question: 'What happened to the plants with music?', choices: ['They died', 'They stayed the same', 'They were taller', 'They turned brown'], answer: 2 }
+        ]
+    },
+    {
+        title: 'The Space Mission',
+        passage: 'Captain Lee checked all the controls one last time. In five minutes, her spaceship would launch to Mars. She had trained for this mission for five years. The whole world was watching. When the countdown reached zero, the engines roared to life. The spaceship shot up into the sky, leaving a trail of fire behind it. Captain Lee smiled. Her dream was finally coming true.',
+        questions: [
+            { question: 'Where was Captain Lee going?', choices: ['The Moon', 'Mars', 'Jupiter', 'The Sun'], answer: 1 },
+            { question: 'How long did Captain Lee train?', choices: ['One year', 'Three years', 'Five years', 'Ten years'], answer: 2 },
+            { question: 'How did Captain Lee feel when the spaceship launched?', choices: ['Scared', 'Angry', 'Happy', 'Sad'], answer: 2 }
+        ]
+    },
+    {
+        title: 'The Secret Garden',
+        passage: 'Behind the old library, there was a hidden door covered with ivy. Lily discovered it one summer day. She pushed the door open and found a beautiful garden filled with colorful flowers and butterflies. In the middle was a stone fountain with clear water. Lily decided this would be her secret place to read books and dream.',
+        questions: [
+            { question: 'Where was the hidden door?', choices: ['Behind her house', 'Behind the library', 'At the park', 'At school'], answer: 1 },
+            { question: 'What covered the door?', choices: ['Moss', 'Flowers', 'Ivy', 'Paint'], answer: 2 },
+            { question: 'What was in the middle of the garden?', choices: ['A tree', 'A bench', 'A fountain', 'A statue'], answer: 2 }
+        ]
+    },
+    {
+        title: 'The Baking Contest',
+        passage: 'Grandma Rosa taught Miguel how to bake her famous chocolate cake. The secret ingredient was a tiny bit of cinnamon. On the day of the school baking contest, Miguel carefully followed the recipe. The judges tasted every entry. When they announced the winner, Miguel couldn\'t believe his ears. His cake won first place! He ran to call Grandma Rosa to share the good news.',
+        questions: [
+            { question: 'What was the secret ingredient?', choices: ['Vanilla', 'Cinnamon', 'Sugar', 'Salt'], answer: 1 },
+            { question: 'Who taught Miguel to bake?', choices: ['His mom', 'His dad', 'Grandma Rosa', 'His teacher'], answer: 2 },
+            { question: 'What place did Miguel win?', choices: ['Second place', 'Third place', 'First place', 'No place'], answer: 2 }
+        ]
+    }
+];
+
+// Interactive Story Adventures
+const STORY_ADVENTURES = [
+    {
+        id: 'dragon',
+        title: 'The Friendly Dragon',
+        scenes: [
+            {
+                text: 'You are walking through a magical forest when you hear a strange sound coming from behind the bushes. What do you do?',
+                choices: [
+                    { text: 'Walk closer to investigate', next: 1 },
+                    { text: 'Hide behind a tree and watch', next: 2 }
+                ]
+            },
+            {
+                text: 'You push through the bushes and find a baby dragon with a hurt wing! The dragon looks scared but doesn\'t fly away. What do you do?',
+                choices: [
+                    { text: 'Speak softly and offer help', next: 3 },
+                    { text: 'Run and get an adult', next: 4 }
+                ]
+            },
+            {
+                text: 'From behind the tree, you see a baby dragon trying to fly but falling down each time. Its wing seems hurt. The dragon starts to cry little puffs of smoke.',
+                choices: [
+                    { text: 'Come out and try to help', next: 3 },
+                    { text: 'Run and get an adult', next: 4 }
+                ]
+            },
+            {
+                text: '"Don\'t be scared, little one," you say gently. The dragon stops shaking and looks at you with big golden eyes. You carefully wrap your scarf around its hurt wing. The dragon purrs happily!',
+                choices: [
+                    { text: 'Take the dragon home to heal', next: 5 },
+                    { text: 'Stay and keep it company', next: 6 }
+                ]
+            },
+            {
+                text: 'You run to find your grandmother who knows about magical creatures. She comes back with you and brings special healing herbs. Together, you help the dragon!',
+                choices: [
+                    { text: 'Continue the adventure', next: 6 }
+                ]
+            },
+            {
+                text: 'After a few days of care, the dragon\'s wing is healed! The dragon breathes a tiny flame that turns into a beautiful flower and gives it to you. You\'ve made a friend for life!',
+                ending: true,
+                message: '🎉 You showed kindness and made a magical friend!'
+            },
+            {
+                text: 'You stay with the dragon as the sun sets. The dragon\'s mother appears! She sees you helping and bows her head in thanks. She gently heals her baby with dragon magic.',
+                ending: true,
+                message: '🌟 Your patience and kindness were rewarded!'
+            }
+        ]
+    },
+    {
+        id: 'underwater',
+        title: 'The Underwater Kingdom',
+        scenes: [
+            {
+                text: 'While swimming at the beach, you find a shimmering seashell. When you hold it to your ear, a voice says: "Help us, brave one!" Suddenly you can breathe underwater!',
+                choices: [
+                    { text: 'Dive down to explore', next: 1 },
+                    { text: 'Swim out to the deep water', next: 2 }
+                ]
+            },
+            {
+                text: 'You dive down and discover a beautiful underwater city made of coral and pearls! A young mermaid swims up to you. "The giant octopus took our queen\'s crown. Will you help?"',
+                choices: [
+                    { text: 'Agree to help find the crown', next: 3 },
+                    { text: 'Ask for more information first', next: 4 }
+                ]
+            },
+            {
+                text: 'Swimming out to deeper water, you meet a wise old sea turtle. "Young one, the merpeople need a hero. Their crown has been stolen!"',
+                choices: [
+                    { text: 'Ask the turtle to guide you', next: 4 },
+                    { text: 'Follow the bubbles to find them', next: 3 }
+                ]
+            },
+            {
+                text: 'You swim to the octopus\'s cave. It\'s dark and spooky! The giant octopus is actually crying. "I didn\'t mean to take it! I just wanted something shiny. My cave is so dark and lonely."',
+                choices: [
+                    { text: 'Offer to be the octopus\'s friend', next: 5 },
+                    { text: 'Promise to bring the octopus a light', next: 6 }
+                ]
+            },
+            {
+                text: 'The mermaid explains: "The octopus is not mean, just lonely. Maybe if someone was kind to it, it would return the crown."',
+                choices: [
+                    { text: 'Go talk to the octopus nicely', next: 5 }
+                ]
+            },
+            {
+                text: '"Really? You want to be my friend?" The octopus gives you a big, squishy hug with all eight arms! It happily returns the crown and the whole kingdom celebrates!',
+                ending: true,
+                message: '🐙 Kindness solved the problem! The octopus and merpeople are now friends!'
+            },
+            {
+                text: 'You bring back a glowing jellyfish lamp for the octopus. Its cave lights up beautifully! So happy, the octopus returns the crown and invites everyone to a party in its now-bright cave!',
+                ending: true,
+                message: '✨ You found a creative solution and made everyone happy!'
+            }
+        ]
+    },
+    {
+        id: 'timetravel',
+        title: 'The Time Machine',
+        scenes: [
+            {
+                text: 'In your attic, you find an old pocket watch that glows! When you press the button, a voice asks: "Where would you like to go?" You can travel through time!',
+                choices: [
+                    { text: 'Visit the dinosaurs!', next: 1 },
+                    { text: 'Go to the future!', next: 2 }
+                ]
+            },
+            {
+                text: 'WHOOSH! You land in a jungle millions of years ago. Huge trees tower above you. You hear a rumbling sound... A baby triceratops is stuck in the mud!',
+                choices: [
+                    { text: 'Help pull it out', next: 3 },
+                    { text: 'Look for something to help', next: 4 }
+                ]
+            },
+            {
+                text: 'ZOOM! You appear in a city with flying cars and robots! A friendly robot rolls up. "Welcome, time traveler! We have a problem. Can you help us remember how to plant seeds?"',
+                choices: [
+                    { text: 'Teach them about gardening', next: 5 },
+                    { text: 'Ask why they forgot', next: 6 }
+                ]
+            },
+            {
+                text: 'You pull and pull, but the mud is too sticky! The mother triceratops arrives and helps push while you pull. Together, you free the baby! The dinosaur family trumpets happily.',
+                ending: true,
+                message: '🦕 Teamwork saved the day! The dinosaurs do a happy dance!'
+            },
+            {
+                text: 'You find a strong vine and loop it around a tree. Using it as a pulley, you help the baby climb out! The grateful mother triceratops gives you a beautiful blue feather.',
+                ending: true,
+                message: '🪶 Your clever thinking solved the problem!'
+            },
+            {
+                text: 'You show them how to dig holes, plant seeds, and water them. The robots are so excited! "We will have flowers again!" They make you an honorary citizen of the future!',
+                ending: true,
+                message: '🌱 You brought nature back to the future!'
+            },
+            {
+                text: '"Everyone got too busy with machines and forgot about nature," the robot says sadly. You spend the day teaching them about plants, and soon the whole city is gardening!',
+                ending: true,
+                message: '🤖 You reminded the future about what really matters!'
+            }
+        ]
+    }
+];
+
+// Advanced spelling words with patterns
+const SPELLING_WORDS = {
+    easy: ['because', 'friend', 'special', 'believe', 'thought', 'through', 'people', 'enough', 'beautiful', 'different'],
+    medium: ['knowledge', 'adventure', 'mysterious', 'wonderful', 'celebrate', 'important', 'excellent', 'disappear', 'impossible', 'comfortable'],
+    hard: ['extraordinary', 'immediately', 'unfortunately', 'encyclopedia', 'accomplishment', 'determination', 'imagination', 'communication', 'environment', 'responsibility']
 };
 
 class LearnFunApp {
@@ -320,9 +499,10 @@ class LearnFunApp {
                 subtraction: { correct: 0, attempted: 0 }
             },
             reading: {
-                sightWords: { correct: 0, attempted: 0 },
-                wordMatch: { correct: 0, attempted: 0 },
-                spelling: { correct: 0, attempted: 0 }
+                vocabulary: { correct: 0, attempted: 0 },
+                comprehension: { correct: 0, attempted: 0 },
+                spelling: { correct: 0, attempted: 0 },
+                story: { correct: 0, attempted: 0 }
             }
         };
     }
@@ -347,7 +527,7 @@ class LearnFunApp {
             const settings = JSON.parse(saved);
             this.difficulty = settings.difficulty || 'easy';
             this.mathLevel = settings.mathLevel || 1;
-            this.readingLevel = settings.readingLevel || 1;
+            this.spellingDifficulty = settings.spellingDifficulty || 'easy';
             this.sound.enabled = settings.soundEnabled !== false;
         }
         this.updateSettingsUI();
@@ -357,7 +537,7 @@ class LearnFunApp {
         localStorage.setItem('learnFunSettings', JSON.stringify({
             difficulty: this.difficulty,
             mathLevel: this.mathLevel,
-            readingLevel: this.readingLevel,
+            spellingDifficulty: this.spellingDifficulty,
             soundEnabled: this.sound.enabled
         }));
     }
@@ -429,12 +609,13 @@ class LearnFunApp {
             });
         });
 
-        // Reading level buttons
-        document.querySelectorAll('#reading-level-buttons .level-btn').forEach(btn => {
+        // Spelling difficulty buttons
+        document.querySelectorAll('#spelling-difficulty-buttons .diff-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.sound.playClick();
-                this.readingLevel = parseInt(btn.dataset.level);
-                this.updateSettingsUI();
+                this.spellingDifficulty = btn.dataset.difficulty;
+                document.querySelectorAll('#spelling-difficulty-buttons .diff-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
                 this.saveSettings();
             });
         });
@@ -934,152 +1115,341 @@ class LearnFunApp {
         this.currentSubject = 'reading';
         this.currentProblem = 0;
         this.correctAnswers = 0;
-        this.isTimerMode = mode === 'reading-timer';
+        this.isTimerMode = false;
 
         this.sessionStartTime = Date.now();
         this.currentSessionStats = {
-            sightWords: { correct: 0, attempted: 0 },
-            wordMatch: { correct: 0, attempted: 0 },
-            spelling: { correct: 0, attempted: 0 }
+            vocabulary: { correct: 0, attempted: 0 },
+            comprehension: { correct: 0, attempted: 0 },
+            spelling: { correct: 0, attempted: 0 },
+            story: { correct: 0, attempted: 0 }
         };
 
-        const settings = DIFFICULTY_SETTINGS[this.difficulty];
-        this.totalProblems = this.isTimerMode ? 999 : settings.problemsPerRound;
+        // Hide all containers first
+        this.hideAllReadingContainers();
 
-        this.words = this.generateReadingProblems(mode);
-
-        this.elements.readingModeTitle.textContent = this.getReadingModeName(mode);
-        this.elements.readingTotalProblems.textContent = this.isTimerMode ? '∞' : this.totalProblems;
-
-        // Show/hide appropriate containers
-        this.elements.pictureContainer.style.display = (mode === 'word-to-picture') ? 'flex' : 'none';
-        this.elements.spellingContainer.style.display = (mode === 'spelling') ? 'flex' : 'none';
-        this.elements.wordCard.style.display = (mode !== 'spelling') ? 'flex' : 'none';
-        document.getElementById('speak-word').style.display = (mode === 'spelling' || mode === 'sight-words') ? 'inline-block' : 'none';
-
-        if (this.isTimerMode) {
-            this.timeRemaining = settings.timerSeconds;
-            this.elements.readingTimerDisplay.classList.add('active');
-            this.elements.readingTimerValue.textContent = this.timeRemaining;
-            this.startReadingTimer();
-        } else {
-            this.elements.readingTimerDisplay.classList.remove('active');
+        // Set up based on mode
+        if (mode === 'story') {
+            this.startStoryMode();
+        } else if (mode === 'vocabulary') {
+            this.startVocabularyMode();
+        } else if (mode === 'comprehension') {
+            this.startComprehensionMode();
+        } else if (mode === 'spelling') {
+            this.startSpellingMode();
         }
 
+        this.elements.readingModeTitle.textContent = this.getReadingModeName(mode);
         this.showScreen('readingGame');
-        this.showReadingProblem();
+    }
+
+    hideAllReadingContainers() {
+        const containers = ['story-container', 'vocab-container', 'comprehension-container', 'spelling-container', 'reading-answers'];
+        containers.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+        });
+        const progressContainer = document.getElementById('reading-progress-container');
+        if (progressContainer) progressContainer.style.display = 'flex';
     }
 
     getReadingModeName(mode) {
         const names = {
-            'sight-words': 'Sight Words',
-            'word-to-picture': 'Word to Picture',
-            'spelling': 'Spelling',
-            'sentence-reading': 'Sentence Reading',
-            'reading-timer': 'Speed Reading'
+            'story': '📖 Story Adventure',
+            'vocabulary': '📝 Vocabulary Builder',
+            'comprehension': '🔍 Reading Comprehension',
+            'spelling': '✏️ Spelling Challenge'
         };
         return names[mode] || mode;
     }
 
-    generateReadingProblems(mode) {
-        const words = [];
-        const count = this.isTimerMode ? 50 : this.totalProblems;
+    // ==================== STORY MODE ====================
 
-        if (mode === 'word-to-picture') {
-            const pictureWords = PICTURE_WORDS[this.readingLevel] || PICTURE_WORDS[1];
-            for (let i = 0; i < count; i++) {
-                const word = pictureWords[Math.floor(Math.random() * pictureWords.length)];
-                words.push({ ...word, type: 'picture' });
-            }
-        } else {
-            const sightWords = SIGHT_WORDS[this.readingLevel] || SIGHT_WORDS[1];
-            for (let i = 0; i < count; i++) {
-                const word = sightWords[Math.floor(Math.random() * sightWords.length)];
-                words.push({ word: word, type: mode === 'spelling' ? 'spelling' : 'sight' });
-            }
-        }
+    startStoryMode() {
+        const storyContainer = document.getElementById('story-container');
+        storyContainer.style.display = 'block';
+        document.getElementById('reading-progress-container').style.display = 'none';
 
-        return words;
+        // Pick a random story
+        this.currentStory = STORY_ADVENTURES[Math.floor(Math.random() * STORY_ADVENTURES.length)];
+        this.currentSceneIndex = 0;
+        this.totalProblems = 1; // Stories count as 1 complete activity
+
+        document.getElementById('story-title').textContent = this.currentStory.title;
+        this.showStoryScene();
     }
 
-    showReadingProblem() {
-        if (this.currentProblem >= this.words.length) {
-            this.words = this.words.concat(this.generateReadingProblems(this.readingMode));
+    showStoryScene() {
+        const scene = this.currentStory.scenes[this.currentSceneIndex];
+        const storyText = document.getElementById('story-text');
+        const storyChoices = document.getElementById('story-choices');
+
+        storyText.textContent = scene.text;
+        storyChoices.innerHTML = '';
+
+        if (scene.ending) {
+            // Show ending
+            const endingDiv = document.createElement('div');
+            endingDiv.className = 'story-ending';
+            endingDiv.innerHTML = `<div class="ending-message">${scene.message}</div>`;
+            storyChoices.appendChild(endingDiv);
+
+            const continueBtn = document.createElement('button');
+            continueBtn.className = 'story-choice-btn ending-btn';
+            continueBtn.textContent = '🎉 Finish Story';
+            continueBtn.addEventListener('click', () => {
+                this.correctAnswers = 1;
+                this.currentSessionStats.story.correct++;
+                this.currentSessionStats.story.attempted++;
+                this.sound.playSuccess();
+                this.endGame();
+            });
+            storyChoices.appendChild(continueBtn);
+        } else {
+            // Show choices
+            scene.choices.forEach((choice, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'story-choice-btn';
+                btn.textContent = choice.text;
+                btn.addEventListener('click', () => {
+                    this.sound.playClick();
+                    this.currentSceneIndex = choice.next;
+                    this.showStoryScene();
+                });
+                storyChoices.appendChild(btn);
+            });
+        }
+    }
+
+    // ==================== VOCABULARY MODE ====================
+
+    startVocabularyMode() {
+        const vocabContainer = document.getElementById('vocab-container');
+        vocabContainer.style.display = 'block';
+
+        // Shuffle vocabulary words
+        this.vocabWords = [...VOCABULARY_WORDS].sort(() => Math.random() - 0.5);
+        this.totalProblems = Math.min(10, this.vocabWords.length);
+        this.elements.readingTotalProblems.textContent = this.totalProblems;
+
+        this.showVocabularyProblem();
+    }
+
+    showVocabularyProblem() {
+        if (this.currentProblem >= this.totalProblems) {
+            this.endGame();
+            return;
         }
 
-        const wordData = this.words[this.currentProblem];
+        const wordData = this.vocabWords[this.currentProblem];
         this.currentWord = wordData.word;
 
-        if (this.readingMode === 'word-to-picture') {
-            this.elements.pictureDisplay.textContent = wordData.emoji;
-            this.generateWordChoices(wordData.word);
-        } else if (this.readingMode === 'spelling') {
-            this.elements.spellingInput.value = '';
-            this.elements.spellingInput.focus();
-            this.sound.speakWord(wordData.word);
+        document.getElementById('vocab-word').textContent = wordData.word;
+        document.getElementById('vocab-definition').textContent = `"${wordData.definition}"`;
+
+        const questionEl = document.getElementById('vocab-question');
+        const choicesEl = document.getElementById('vocab-choices');
+        choicesEl.innerHTML = '';
+
+        // Randomly choose question type
+        const questionType = Math.floor(Math.random() * 3);
+
+        if (questionType === 0) {
+            // Synonym question
+            questionEl.textContent = 'Which word means the SAME as this word?';
+            const correctAnswer = wordData.synonyms[Math.floor(Math.random() * wordData.synonyms.length)];
+            const wrongAnswers = this.getRandomWrongAnswers(correctAnswer, 'synonyms');
+            this.createVocabChoices(choicesEl, correctAnswer, wrongAnswers);
+        } else if (questionType === 1) {
+            // Antonym question
+            questionEl.textContent = 'Which word means the OPPOSITE of this word?';
+            const correctAnswer = wordData.antonyms[Math.floor(Math.random() * wordData.antonyms.length)];
+            const wrongAnswers = this.getRandomWrongAnswers(correctAnswer, 'antonyms');
+            this.createVocabChoices(choicesEl, correctAnswer, wrongAnswers);
         } else {
-            this.elements.displayWord.textContent = wordData.word;
-            this.generateReadingAnswerChoices(wordData.word);
+            // Definition match
+            questionEl.textContent = 'What does this word mean?';
+            const correctAnswer = wordData.definition;
+            const wrongDefs = VOCABULARY_WORDS
+                .filter(w => w.word !== wordData.word)
+                .map(w => w.definition)
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3);
+            this.createVocabChoices(choicesEl, correctAnswer, wrongDefs);
         }
 
-        this.elements.readingCurrentProblem.textContent = this.currentProblem + 1;
-        if (!this.isTimerMode) {
-            this.elements.readingProgressFill.style.width = `${(this.currentProblem / this.totalProblems) * 100}%`;
-        }
-
-        this.elements.readingFeedback.classList.remove('show', 'correct', 'incorrect');
+        this.updateReadingProgress();
     }
 
-    generateWordChoices(correctWord) {
-        this.elements.readingAnswers.innerHTML = '';
-        const allWords = PICTURE_WORDS[this.readingLevel] || PICTURE_WORDS[1];
+    getRandomWrongAnswers(correct, type) {
+        const allWords = [];
+        VOCABULARY_WORDS.forEach(w => {
+            if (type === 'synonyms') allWords.push(...w.synonyms);
+            else allWords.push(...w.antonyms);
+        });
+        return allWords
+            .filter(w => w !== correct)
+            .sort(() => Math.random() - 0.5)
+            .slice(0, 3);
+    }
 
-        const otherWords = allWords.filter(w => w.word !== correctWord);
-        const shuffled = otherWords.sort(() => Math.random() - 0.5).slice(0, 3);
-        const choices = [correctWord, ...shuffled.map(w => w.word)];
-
-        // Shuffle choices
-        for (let i = choices.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [choices[i], choices[j]] = [choices[j], choices[i]];
-        }
-
-        choices.forEach(word => {
+    createVocabChoices(container, correct, wrong) {
+        const choices = [correct, ...wrong].sort(() => Math.random() - 0.5);
+        choices.forEach(choice => {
             const btn = document.createElement('button');
-            btn.className = 'reading-answer-btn';
-            btn.textContent = word;
-            btn.addEventListener('click', () => this.checkReadingAnswer(word, correctWord, btn));
-            this.elements.readingAnswers.appendChild(btn);
+            btn.className = 'vocab-choice-btn';
+            btn.textContent = choice;
+            btn.addEventListener('click', () => this.checkVocabAnswer(choice, correct, btn));
+            container.appendChild(btn);
         });
     }
 
-    generateReadingAnswerChoices(correctWord) {
-        this.elements.readingAnswers.innerHTML = '';
-
-        // For sight words, show "I read it!" button
-        const btn = document.createElement('button');
-        btn.className = 'reading-answer-btn big-btn';
-        btn.textContent = '✓ I read it!';
-        btn.addEventListener('click', () => {
-            this.recordReadingAnswer(true);
-        });
-        this.elements.readingAnswers.appendChild(btn);
-
-        const skipBtn = document.createElement('button');
-        skipBtn.className = 'reading-answer-btn skip-btn';
-        skipBtn.textContent = 'Skip';
-        skipBtn.addEventListener('click', () => {
-            this.recordReadingAnswer(false);
-        });
-        this.elements.readingAnswers.appendChild(skipBtn);
-    }
-
-    checkReadingAnswer(selected, correct, button) {
-        const buttons = this.elements.readingAnswers.querySelectorAll('.reading-answer-btn');
+    checkVocabAnswer(selected, correct, button) {
+        const buttons = document.querySelectorAll('.vocab-choice-btn');
         buttons.forEach(btn => btn.disabled = true);
 
         const isCorrect = selected === correct;
-        this.recordReadingResult(isCorrect, button, correct);
+
+        if (isCorrect) {
+            button.classList.add('correct');
+            this.correctAnswers++;
+            this.stats.streak++;
+            if (this.stats.streak > this.stats.bestStreak) this.stats.bestStreak = this.stats.streak;
+            this.showFeedback(true, this.elements.readingFeedback);
+            this.sound.playCorrect();
+            this.currentSessionStats.vocabulary.correct++;
+        } else {
+            button.classList.add('incorrect');
+            buttons.forEach(btn => {
+                if (btn.textContent === correct) btn.classList.add('correct');
+            });
+            this.stats.streak = 0;
+            this.showFeedback(false, this.elements.readingFeedback);
+            this.sound.playIncorrect();
+        }
+
+        this.currentSessionStats.vocabulary.attempted++;
+        this.stats.totalAttempted++;
+        if (isCorrect) this.stats.totalCorrect++;
+        this.updateStatsDisplay();
+        this.saveStats();
+
+        setTimeout(() => {
+            this.currentProblem++;
+            this.showVocabularyProblem();
+        }, 1500);
+    }
+
+    // ==================== COMPREHENSION MODE ====================
+
+    startComprehensionMode() {
+        const container = document.getElementById('comprehension-container');
+        container.style.display = 'block';
+
+        // Pick a random passage
+        this.currentPassage = READING_PASSAGES[Math.floor(Math.random() * READING_PASSAGES.length)];
+        this.currentQuestionIndex = 0;
+        this.totalProblems = this.currentPassage.questions.length;
+        this.elements.readingTotalProblems.textContent = this.totalProblems;
+
+        document.getElementById('passage-title').textContent = this.currentPassage.title;
+        document.getElementById('passage-text').textContent = this.currentPassage.passage;
+
+        this.showComprehensionQuestion();
+    }
+
+    showComprehensionQuestion() {
+        if (this.currentProblem >= this.totalProblems) {
+            this.endGame();
+            return;
+        }
+
+        const question = this.currentPassage.questions[this.currentProblem];
+        const questionEl = document.getElementById('comprehension-question');
+        const choicesEl = document.getElementById('comprehension-choices');
+
+        questionEl.textContent = question.question;
+        choicesEl.innerHTML = '';
+
+        question.choices.forEach((choice, index) => {
+            const btn = document.createElement('button');
+            btn.className = 'comprehension-choice-btn';
+            btn.textContent = choice;
+            btn.addEventListener('click', () => this.checkComprehensionAnswer(index, question.answer, btn));
+            choicesEl.appendChild(btn);
+        });
+
+        this.updateReadingProgress();
+    }
+
+    checkComprehensionAnswer(selected, correct, button) {
+        const buttons = document.querySelectorAll('.comprehension-choice-btn');
+        buttons.forEach(btn => btn.disabled = true);
+
+        const isCorrect = selected === correct;
+
+        if (isCorrect) {
+            button.classList.add('correct');
+            this.correctAnswers++;
+            this.stats.streak++;
+            if (this.stats.streak > this.stats.bestStreak) this.stats.bestStreak = this.stats.streak;
+            this.showFeedback(true, this.elements.readingFeedback);
+            this.sound.playCorrect();
+            this.currentSessionStats.comprehension.correct++;
+        } else {
+            button.classList.add('incorrect');
+            buttons.forEach((btn, idx) => {
+                if (idx === correct) btn.classList.add('correct');
+            });
+            this.stats.streak = 0;
+            this.showFeedback(false, this.elements.readingFeedback);
+            this.sound.playIncorrect();
+        }
+
+        this.currentSessionStats.comprehension.attempted++;
+        this.stats.totalAttempted++;
+        if (isCorrect) this.stats.totalCorrect++;
+        this.updateStatsDisplay();
+        this.saveStats();
+
+        setTimeout(() => {
+            this.currentProblem++;
+            this.showComprehensionQuestion();
+        }, 1500);
+    }
+
+    // ==================== SPELLING MODE ====================
+
+    startSpellingMode() {
+        const container = document.getElementById('spelling-container');
+        container.style.display = 'flex';
+
+        // Get spelling words based on difficulty
+        const difficulty = this.spellingDifficulty || 'easy';
+        this.spellingWords = [...SPELLING_WORDS[difficulty]].sort(() => Math.random() - 0.5);
+        this.totalProblems = Math.min(10, this.spellingWords.length);
+        this.elements.readingTotalProblems.textContent = this.totalProblems;
+
+        this.showSpellingProblem();
+    }
+
+    showSpellingProblem() {
+        if (this.currentProblem >= this.totalProblems) {
+            this.endGame();
+            return;
+        }
+
+        this.currentWord = this.spellingWords[this.currentProblem];
+        this.elements.spellingInput.value = '';
+        this.elements.spellingInput.disabled = false;
+        document.getElementById('submit-spelling').disabled = false;
+        this.elements.spellingInput.focus();
+
+        // Speak the word
+        this.sound.speakWord(this.currentWord);
+
+        this.updateReadingProgress();
+        this.elements.readingFeedback.classList.remove('show', 'correct', 'incorrect');
     }
 
     checkSpelling() {
@@ -1090,57 +1460,39 @@ class LearnFunApp {
         this.elements.spellingInput.disabled = true;
         document.getElementById('submit-spelling').disabled = true;
 
-        this.recordReadingResult(isCorrect, null, correct);
-    }
-
-    recordReadingAnswer(isCorrect) {
-        this.recordReadingResult(isCorrect, null, this.currentWord);
-    }
-
-    recordReadingResult(isCorrect, button, correctWord) {
         if (isCorrect) {
-            if (button) button.classList.add('correct');
+            this.elements.spellingInput.classList.add('correct');
             this.correctAnswers++;
             this.stats.streak++;
-            if (this.stats.streak > this.stats.bestStreak) {
-                this.stats.bestStreak = this.stats.streak;
-            }
+            if (this.stats.streak > this.stats.bestStreak) this.stats.bestStreak = this.stats.streak;
             this.showFeedback(true, this.elements.readingFeedback);
             this.sound.playCorrect();
+            this.currentSessionStats.spelling.correct++;
         } else {
-            if (button) button.classList.add('incorrect');
+            this.elements.spellingInput.classList.add('incorrect');
             this.stats.streak = 0;
-            this.showFeedback(false, this.elements.readingFeedback, `The word was: ${correctWord}`);
+            this.showFeedback(false, this.elements.readingFeedback, `Correct: ${this.currentWord}`);
             this.sound.playIncorrect();
         }
 
+        this.currentSessionStats.spelling.attempted++;
         this.stats.totalAttempted++;
         if (isCorrect) this.stats.totalCorrect++;
-
-        const statType = this.readingMode === 'word-to-picture' ? 'wordMatch' :
-                        this.readingMode === 'spelling' ? 'spelling' : 'sightWords';
-
-        if (this.stats.reading && this.stats.reading[statType]) {
-            this.stats.reading[statType].attempted++;
-            if (isCorrect) this.stats.reading[statType].correct++;
-        }
-
         this.updateStatsDisplay();
         this.saveStats();
 
-        const delay = this.isTimerMode ? 600 : 1200;
         setTimeout(() => {
+            this.elements.spellingInput.classList.remove('correct', 'incorrect');
             this.currentProblem++;
-            this.elements.spellingInput.disabled = false;
-            document.getElementById('submit-spelling').disabled = false;
-
-            if (!this.isTimerMode && this.currentProblem >= this.totalProblems) {
-                this.endGame();
-            } else {
-                this.showReadingProblem();
-            }
-        }, delay);
+            this.showSpellingProblem();
+        }, 2000);
     }
+
+    updateReadingProgress() {
+        this.elements.readingCurrentProblem.textContent = this.currentProblem + 1;
+        this.elements.readingProgressFill.style.width = `${(this.currentProblem / this.totalProblems) * 100}%`;
+    }
+
 
     // ==================== COMMON FUNCTIONS ====================
 
@@ -1430,16 +1782,12 @@ class LearnFunApp {
         });
 
         // Reading accuracy
-        const readingTypes = [
-            { key: 'sightWords', id: 'sight-words' },
-            { key: 'wordMatch', id: 'word-match' },
-            { key: 'spelling', id: 'spelling' }
-        ];
+        const readingTypes = ['vocabulary', 'comprehension', 'spelling', 'story'];
         readingTypes.forEach(type => {
-            const stats = this.stats.reading?.[type.key] || { correct: 0, attempted: 0 };
+            const stats = this.stats.reading?.[type] || { correct: 0, attempted: 0 };
             const accuracy = stats.attempted > 0 ? Math.round((stats.correct / stats.attempted) * 100) : 0;
-            const bar = document.getElementById(`accuracy-${type.id}`);
-            const text = document.getElementById(`accuracy-${type.id}-text`);
+            const bar = document.getElementById(`accuracy-${type}`);
+            const text = document.getElementById(`accuracy-${type}-text`);
             if (bar) bar.style.width = accuracy + '%';
             if (text) text.textContent = accuracy + '%';
         });
@@ -1554,7 +1902,8 @@ class LearnFunApp {
             { key: 'bonds', name: 'Number Bonds', icon: '🎯', stats: this.stats.math?.bonds },
             { key: 'addition', name: 'Addition', icon: '➕', stats: this.stats.math?.addition },
             { key: 'subtraction', name: 'Subtraction', icon: '➖', stats: this.stats.math?.subtraction },
-            { key: 'sightWords', name: 'Sight Words', icon: '👀', stats: this.stats.reading?.sightWords },
+            { key: 'vocabulary', name: 'Vocabulary', icon: '📝', stats: this.stats.reading?.vocabulary },
+            { key: 'comprehension', name: 'Comprehension', icon: '🔍', stats: this.stats.reading?.comprehension },
             { key: 'spelling', name: 'Spelling', icon: '✏️', stats: this.stats.reading?.spelling }
         ];
 
@@ -1608,9 +1957,10 @@ class LearnFunApp {
                 subtraction: { correct: 0, attempted: 0 }
             },
             reading: {
-                sightWords: { correct: 0, attempted: 0 },
-                wordMatch: { correct: 0, attempted: 0 },
-                spelling: { correct: 0, attempted: 0 }
+                vocabulary: { correct: 0, attempted: 0 },
+                comprehension: { correct: 0, attempted: 0 },
+                spelling: { correct: 0, attempted: 0 },
+                story: { correct: 0, attempted: 0 }
             }
         };
         this.sessions = [];
@@ -1631,5 +1981,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export for testing
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { LearnFunApp, SoundManager, DIFFICULTY_SETTINGS, MATH_LEVEL_SETTINGS, SIGHT_WORDS };
+    module.exports = { LearnFunApp, SoundManager, DIFFICULTY_SETTINGS, MATH_LEVEL_SETTINGS, VOCABULARY_WORDS, READING_PASSAGES, SPELLING_WORDS };
 }

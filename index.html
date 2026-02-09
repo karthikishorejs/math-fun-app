@@ -138,50 +138,43 @@
                 <h2>📚 Reading Adventures</h2>
             </div>
 
-            <div class="level-selector">
-                <span class="level-label">Level:</span>
-                <div class="level-buttons" id="reading-level-buttons">
-                    <button class="level-btn active" data-level="1">Level 1</button>
-                    <button class="level-btn" data-level="2">Level 2</button>
-                    <button class="level-btn" data-level="3">Level 3</button>
-                </div>
-            </div>
-
             <div class="menu-buttons">
-                <button class="menu-btn sight-words-btn" data-mode="sight-words">
-                    <span class="btn-icon">👀</span>
-                    <span class="btn-text">Sight Words</span>
-                    <span class="btn-desc">Learn common words by sight</span>
+                <button class="menu-btn story-btn" data-mode="story">
+                    <span class="btn-icon">📖</span>
+                    <span class="btn-text">Story Adventures</span>
+                    <span class="btn-desc">Interactive stories with choices!</span>
                 </button>
 
-                <button class="menu-btn word-match-btn" data-mode="word-to-picture">
-                    <span class="btn-icon">🖼️</span>
-                    <span class="btn-text">Word to Picture</span>
-                    <span class="btn-desc">Match words to images</span>
+                <button class="menu-btn vocab-btn" data-mode="vocabulary">
+                    <span class="btn-icon">📝</span>
+                    <span class="btn-text">Vocabulary Builder</span>
+                    <span class="btn-desc">Learn new words & meanings</span>
+                </button>
+
+                <button class="menu-btn comprehension-btn" data-mode="comprehension">
+                    <span class="btn-icon">🔍</span>
+                    <span class="btn-text">Reading Comprehension</span>
+                    <span class="btn-desc">Read passages & answer questions</span>
                 </button>
 
                 <button class="menu-btn spelling-btn" data-mode="spelling">
                     <span class="btn-icon">✏️</span>
-                    <span class="btn-text">Spelling</span>
-                    <span class="btn-desc">Spell the word you hear</span>
-                </button>
-
-                <button class="menu-btn sentence-btn" data-mode="sentence-reading">
-                    <span class="btn-icon">📖</span>
-                    <span class="btn-text">Sentence Reading</span>
-                    <span class="btn-desc">Read and understand sentences</span>
-                </button>
-
-                <button class="menu-btn reading-timer-btn" data-mode="reading-timer">
-                    <span class="btn-icon">⏱️</span>
-                    <span class="btn-text">Speed Reading</span>
-                    <span class="btn-desc">Read words quickly!</span>
+                    <span class="btn-text">Spelling Challenge</span>
+                    <span class="btn-desc">Spell tricky words!</span>
                 </button>
             </div>
 
-            <!-- Settings -->
+            <!-- Difficulty for Spelling -->
             <div class="settings-section">
                 <h3>⚙️ Settings</h3>
+                <div class="setting-row">
+                    <label>Spelling Level:</label>
+                    <div class="difficulty-buttons" id="spelling-difficulty-buttons">
+                        <button class="diff-btn active" data-difficulty="easy">Easy</button>
+                        <button class="diff-btn" data-difficulty="medium">Medium</button>
+                        <button class="diff-btn" data-difficulty="hard">Hard</button>
+                    </div>
+                </div>
                 <div class="setting-row">
                     <label>Sound:</label>
                     <button class="sound-toggle reading-sound-toggle" id="reading-sound-toggle">🔊 On</button>
@@ -351,18 +344,18 @@
                     <h3>📈 Reading Accuracy by Type</h3>
                     <div class="accuracy-bars">
                         <div class="accuracy-row">
-                            <span class="accuracy-label">👀 Sight Words</span>
+                            <span class="accuracy-label">📝 Vocabulary</span>
                             <div class="accuracy-bar-container">
-                                <div class="accuracy-bar reading-bar" id="accuracy-sight-words" style="width: 0%"></div>
+                                <div class="accuracy-bar reading-bar" id="accuracy-vocabulary" style="width: 0%"></div>
                             </div>
-                            <span class="accuracy-percent" id="accuracy-sight-words-text">0%</span>
+                            <span class="accuracy-percent" id="accuracy-vocabulary-text">0%</span>
                         </div>
                         <div class="accuracy-row">
-                            <span class="accuracy-label">🖼️ Word Match</span>
+                            <span class="accuracy-label">🔍 Comprehension</span>
                             <div class="accuracy-bar-container">
-                                <div class="accuracy-bar reading-bar" id="accuracy-word-match" style="width: 0%"></div>
+                                <div class="accuracy-bar reading-bar" id="accuracy-comprehension" style="width: 0%"></div>
                             </div>
-                            <span class="accuracy-percent" id="accuracy-word-match-text">0%</span>
+                            <span class="accuracy-percent" id="accuracy-comprehension-text">0%</span>
                         </div>
                         <div class="accuracy-row">
                             <span class="accuracy-label">✏️ Spelling</span>
@@ -370,6 +363,13 @@
                                 <div class="accuracy-bar reading-bar" id="accuracy-spelling" style="width: 0%"></div>
                             </div>
                             <span class="accuracy-percent" id="accuracy-spelling-text">0%</span>
+                        </div>
+                        <div class="accuracy-row">
+                            <span class="accuracy-label">📖 Stories</span>
+                            <div class="accuracy-bar-container">
+                                <div class="accuracy-bar reading-bar" id="accuracy-story" style="width: 0%"></div>
+                            </div>
+                            <span class="accuracy-percent" id="accuracy-story-text">0%</span>
                         </div>
                     </div>
                 </div>
@@ -462,30 +462,37 @@
         <section id="reading-game-screen" class="screen">
             <div class="game-top-bar">
                 <button class="back-btn" id="back-to-reading-menu">← Back</button>
-                <div class="timer-display reading-timer" id="reading-timer-display">
-                    <span class="timer-icon">⏱️</span>
-                    <span id="reading-timer-value">60</span>
-                </div>
             </div>
 
             <div class="game-area reading-game-area">
-                <h2 id="reading-mode-title" class="mode-title">Sight Words</h2>
+                <h2 id="reading-mode-title" class="mode-title">Reading</h2>
 
-                <!-- Word Display -->
-                <div class="word-display-container">
-                    <div class="word-card" id="word-card">
-                        <span class="display-word" id="display-word">the</span>
-                    </div>
-                    <button class="speak-btn" id="speak-word">🔊 Hear it</button>
+                <!-- Story Container (for story mode) -->
+                <div class="story-container" id="story-container" style="display: none;">
+                    <h3 class="story-title" id="story-title">Story Title</h3>
+                    <div class="story-text" id="story-text"></div>
+                    <div class="story-choices" id="story-choices"></div>
                 </div>
 
-                <!-- Picture Display (for word-to-picture mode) -->
-                <div class="picture-container" id="picture-container" style="display: none;">
-                    <div class="picture-display" id="picture-display">🍎</div>
+                <!-- Vocabulary Container -->
+                <div class="vocab-container" id="vocab-container" style="display: none;">
+                    <div class="vocab-word" id="vocab-word">brilliant</div>
+                    <div class="vocab-definition" id="vocab-definition">"very smart or very bright"</div>
+                    <div class="vocab-question" id="vocab-question"></div>
+                    <div class="vocab-choices" id="vocab-choices"></div>
                 </div>
 
-                <!-- Spelling Input (for spelling mode) -->
+                <!-- Comprehension Container -->
+                <div class="comprehension-container" id="comprehension-container" style="display: none;">
+                    <h3 class="passage-title" id="passage-title">Title</h3>
+                    <div class="passage-text" id="passage-text"></div>
+                    <div class="comprehension-question" id="comprehension-question"></div>
+                    <div class="comprehension-choices" id="comprehension-choices"></div>
+                </div>
+
+                <!-- Spelling Container -->
                 <div class="spelling-container" id="spelling-container" style="display: none;">
+                    <button class="speak-btn big-speak" id="speak-word">🔊 Hear the Word</button>
                     <input type="text" class="spelling-input" id="spelling-input" placeholder="Type the word..." autocomplete="off" autocapitalize="none">
                     <button class="submit-spelling-btn" id="submit-spelling">Check ✓</button>
                 </div>
@@ -500,7 +507,7 @@
                 </div>
 
                 <!-- Progress Bar -->
-                <div class="progress-container">
+                <div class="progress-container" id="reading-progress-container">
                     <div class="progress-bar">
                         <div class="progress-fill reading-progress" id="reading-progress-fill"></div>
                     </div>

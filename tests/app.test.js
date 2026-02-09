@@ -89,7 +89,7 @@ global.window = { AudioContext: MockAudioContext };
 global.AudioContext = MockAudioContext;
 
 // Import the modules (simulated since we're testing the logic)
-const { DIFFICULTY_SETTINGS, MATH_LEVEL_SETTINGS } = require('../app.js');
+const { DIFFICULTY_SETTINGS, MATH_LEVEL_SETTINGS, VOCABULARY_WORDS, READING_PASSAGES, SPELLING_WORDS } = require('../app.js');
 
 // ============================================
 // Test Suite: Difficulty Settings
